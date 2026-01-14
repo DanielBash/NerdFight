@@ -1,0 +1,37 @@
+:root {
+    --pixel-black: #0a0e14;
+    --pixel-dark: #1a1f2e;
+    --pixel-gray-dark: #2d3548;
+    --pixel-gray: #4a5368;
+    --pixel-gray-light: #6c7890;
+    --pixel-light: #8f9bb8;
+    --pixel-white: #c7d1e8;
+
+    --bg-primary: var(--pixel-black);
+    --bg-secondary: var(--pixel-dark);
+    --bg-tertiary: var(--pixel-gray-dark);
+
+    --text-primary: #e6ebf5;
+    --text-secondary: #a0abc0;
+    --text-tertiary: #7685a3;
+    --text-inverse: var(--pixel-black);
+}
+
+
+body {
+  font-family: 'PixFont', sans-serif;
+  font-style: normal;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+  font-smooth: never;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 32px;
+  image-rendering: pixelated;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}

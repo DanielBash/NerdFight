@@ -12,4 +12,4 @@ bp = Blueprint('main', __name__, template_folder=template_dir)
 
 @bp.route('/', methods=['GET'])
 def index():
-    return render_template('index.html', time=str(datetime.datetime.now()))
+    return render_template('index.html', title='Nerd Fight')
