@@ -24,6 +24,6 @@ pip install -r requirements.txt
 python main.py
 ```
 
-README.md - в общем о репозитории
-CONTRIBUTING.md - правила оформления кода
+README.md - в общем о репозитории<br/>
+CONTRIBUTING.md - правила оформления кода<br/>
 TODO.md - наш личный план работ
