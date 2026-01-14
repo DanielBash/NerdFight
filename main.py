@@ -24,6 +24,5 @@ def create_app(config_name='default') -> Flask:
     return app
 
 
-if __name__ == '__main__':
-    app = create_app(config_name=CURRENT_CONFIG_NAME)
-    app.run(debug=False, host='0.0.0.0', port=8080)
+app = create_app(config_name=CURRENT_CONFIG_NAME)
+app.run(debug=False, host='0.0.0.0', port=8080)
