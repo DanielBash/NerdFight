@@ -41,4 +41,4 @@ CONFIGS = {
     'development': DevelopmentConfig(),
     'production': ProductionConfig()
 }
-CURRENT_CONFIG_NAME = 'development'
+CURRENT_CONFIG_NAME = os.environ.get('FLASK_ENV', 'development')
