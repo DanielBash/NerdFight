@@ -1,5 +1,8 @@
-![баннер с логотипом](https://imghost.online/ib/hyDtheYbaBY3FeZ_1768406908.png)
-
+![Banner](https://imghost.online/ib/hyDtheYbaBY3FeZ_1768406908.png)
+[![Tests](https://github.com/DanielBash/NerdFight/actions/workflows/python-tests.yaml/badge.svg)](https://github.com/DanielBash/NerdFight/actions/workflows/python-tests.yaml)
+![Python](https://img.shields.io/badge/python-3.8%2B-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Stars](https://img.shields.io/github/stars/DanielBash/NerdFight)
 # Nerd Fight
 
 > Веб-сайт для садистов, которым не хватает школьных задач.
