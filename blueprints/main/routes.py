@@ -1,4 +1,5 @@
 """СКРИПТ:Пути главного блупринта приложения"""
+
 # -- импорт модулей
 import datetime
 from flask import current_app

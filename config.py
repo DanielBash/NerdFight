@@ -1,4 +1,5 @@
 """СКРИПТ:Настройки"""
+
 # -- импорт модулей
 from openai import OpenAI
 from dotenv import load_dotenv
@@ -34,11 +35,12 @@ class DevelopmentConfig(Config):
 
 # -- конфигурация для продакшена
 class ProductionConfig(Config):
-    DEBUG = True
+    DEBUG = False
 
 CONFIGS = {
     'default': Config(),
     'development': DevelopmentConfig(),
     'production': ProductionConfig()
 }
+
 CURRENT_CONFIG_NAME = os.environ.get('FLASK_ENV', 'development')
