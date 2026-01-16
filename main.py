@@ -23,11 +23,11 @@ def create_app(config_name='default') -> Flask:
         from blueprints.users.routes import bp as users_bp
 
         app.register_blueprint(main_bp)
-        app.register_blueprint(registration_bp)
-        app.register_blueprint(admin_bp)
-        app.register_blueprint(fight_bp)
-        app.register_blueprint(problems_bp)
-        app.register_blueprint(users_bp)
+        app.register_blueprint(registration_bp, url_prefix='/registration')
+        app.register_blueprint(admin_bp, url_prefix='/admin')
+        app.register_blueprint(fight_bp, url_prefix='/fight')
+        app.register_blueprint(problems_bp, url_prefix='/problems')
+        app.register_blueprint(users_bp, url_prefix='/users')
 
         db.create_all()
 
@@ -37,4 +37,4 @@ def create_app(config_name='default') -> Flask:
 app = create_app(config_name=CURRENT_CONFIG_NAME)
 
 if __name__ == '__main__':
-    app.run(debug=False, host='0.0.0.0', port=8000)
+    app.run(debug=False, host='0.0.0.0', port=50000)

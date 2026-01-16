@@ -16,7 +16,7 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # настройки ИИ модели
-    MODEL_API_KEY = os.environ.get('MODEL_API_KEY', '')
+    MODEL_API_KEY = os.environ.get('MODEL_API_KEY', 'model-api-key')
 
     # настройки путей
     STATIC_PATH = Path('static')
