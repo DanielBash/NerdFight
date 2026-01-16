@@ -1,27 +1,32 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{title or "Nerd Fight"}}</title>
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}?v={{ range(1000)|random }}">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tiny5&display=swap" rel="stylesheet">
-
-    <style>
-    @font-face {
-        font-family: 'PixFont';
-        src: url("{{ url_for('static', filename='fonts/font.ttf') }}") format('truetype');
-    }
-    </style>
-
-    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>{% block title %}{{title or "Nerd Fight"}}{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-{% block content %}
-{% endblock %}
+
+<header class="header">
+  <div class="container header__inner">
+    <div class="header__logo">NERD FIGHT</div>
+
+    <div class="header__user">
+      <!-- если не авторизован -->
+      <a href="#">Авторизоваться</a>
+
+      <!-- если авторизован -->
+      <!-- <span class="accent-color">username</span> -->
+    </div>
+  </div>
+</header>
+
+<main class="main">
+  <!-- content -->
+    {% block content %}{% endblock %}
+</main>
+
 </body>
 </html>

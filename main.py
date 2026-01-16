@@ -16,8 +16,18 @@ def create_app(config_name='default') -> Flask:
 
     with app.app_context():
         from blueprints.main.routes import bp as main_bp
+        from blueprints.registration.routes import bp as registration_bp
+        from blueprints.admin.routes import bp as admin_bp
+        from blueprints.fight.routes import bp as fight_bp
+        from blueprints.problems.routes import bp as problems_bp
+        from blueprints.users.routes import bp as users_bp
 
         app.register_blueprint(main_bp)
+        app.register_blueprint(registration_bp)
+        app.register_blueprint(admin_bp)
+        app.register_blueprint(fight_bp)
+        app.register_blueprint(problems_bp)
+        app.register_blueprint(users_bp)
 
         db.create_all()
 
