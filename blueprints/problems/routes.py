@@ -11,7 +11,7 @@ bp = Blueprint('problems', __name__, template_folder=template_dir)
 
 @bp.route('/', methods=['GET'])
 def problems():
-    return current_app.config['MODEL_API_KEY']
+    return render_template('problems.html')
 
 
 @bp.route('/<problem_id>', methods=['GET'])
