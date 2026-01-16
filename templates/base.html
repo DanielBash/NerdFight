@@ -16,17 +16,27 @@
 
     <div class="header__user">
       <!-- если не авторизован -->
-      <a href="#">Авторизоваться</a>
+        {% if session.user_id %}
+        <a href="{{ url_for('users.user', username=session.username) }}">{{session.username}}</a>
 
       <!-- если авторизован -->
+        {% else %}
+        <a href="{{ url_for('registration.register') }}">Авторизоваться</a>
+        {% endif %}
       <!-- <span class="accent-color">username</span> -->
     </div>
   </div>
 </header>
 
 <main class="main">
-  <!-- content -->
-    {% block content %}{% endblock %}
+  {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="form__message">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+  {% block content %}{% endblock %}
 </main>
 
 </body>

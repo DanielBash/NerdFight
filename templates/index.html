@@ -11,7 +11,7 @@
 
     <div class="actions">
       <div class="actions__item">
-        <a class="btn btn--primary" href="{{ url_for('registration.signup') }}">Авторизация</a>
+        <a class="btn btn--primary" href="{{ url_for('registration.register') }}">Авторизация</a>
       </div>
 
       <div class="actions__item">
@@ -23,7 +23,7 @@
       </div>
 
       <div class="actions__item">
-        <a class="btn btn--secondary" href="#">Лидерборд</a>
+        <a class="btn btn--secondary" href="{{ url_for('users.users') }}">Лидерборд</a>
       </div>
     </div>
   </section>

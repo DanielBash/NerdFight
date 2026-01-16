@@ -18,6 +18,11 @@ class Config:
     # настройки ИИ модели
     MODEL_API_KEY = os.environ.get('MODEL_API_KEY', 'model-api-key')
 
+    # Настройка сессий
+    SESSION_COOKIE_HTTPONLY = True
+    SESSION_COOKIE_SECURE = True if os.environ.get('FLASK_ENV') == 'production' else False
+    SESSION_COOKIE_SAMESITE = 'Lax'
+
     # настройки путей
     STATIC_PATH = Path('static')
     TEMPLATE_PATH = Path('templates')
@@ -27,6 +32,10 @@ class Config:
     SESSION_PERMANENT=False
     SESSION_USE_SIGNER=True
     SESSION_KEY_PREFIX='auth:'
+
+    # настройки elo
+    DEFAULT_ELO = 1000
+    DEFAULT_ELO_K = 32
 
     @staticmethod
     def get_openai_client():

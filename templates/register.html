@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Зарегистрироваться{% endblock %}
+
+{% block content %}
+<section class="hero">
+<h2>Регистрация</h2>
+<form method="POST" action="{{ url_for('registration.register') }}" class="form">
+    <div class="form__group">
+        <label for="username">Имя пользователя:</label>
+        <input type="text" id="username" name="username"
+               value=""
+               required minlength="3" maxlength="32"
+               pattern="[a-zA-Z0-9_]+"
+               title="Только буквы, цифры и нижние подчёркивания"
+               class="input">
+        <small class="form__message">От 3 до 32 символов</small>
+    </div>
+
+    <div class="form__group">
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" name="password"
+               required minlength="8" class="input">
+        <small class="form__message">Минимум 8 символов</small>
+    </div>
+
+    <div class="form__group">
+        <label for="password_confirm">Подтверждение пароля:</label>
+        <input type="password" id="password_confirm" name="password_confirm"
+               required minlength="8" class="input">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+
+    <div class="form__message">
+        Уже есть аккаунт? <a href="{{ url_for('registration.login') }}">Войти</a>
+    </div>
+</form>
+</section>
+{% endblock %}

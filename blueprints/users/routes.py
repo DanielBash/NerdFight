@@ -11,5 +11,9 @@ bp = Blueprint('users', __name__, template_folder=template_dir)
 
 
 @bp.route('/', methods=['GET'])
-def index():
-    return render_template('index.html')
+def users():
+    return render_template('users.html')
+
+@bp.route('/<string:username>', methods=['GET'])
+def user(username):
+    return render_template('user.html')

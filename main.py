@@ -30,6 +30,7 @@ def create_app(config_name='default') -> Flask:
         app.register_blueprint(users_bp, url_prefix='/users')
 
         db.create_all()
+        app.config['DATABASE_INSTANCE'] = db
 
     return app
 

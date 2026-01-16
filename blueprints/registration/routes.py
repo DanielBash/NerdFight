@@ -2,23 +2,96 @@
 
 # -- импорт модулей
 import datetime
-from flask import current_app
+from flask import current_app, redirect, url_for, flash
 from flask import Blueprint, render_template, request, jsonify, session
 import os, re, hashlib
 from werkzeug.security import generate_password_hash, check_password_hash
+from .validation import *
+from models import db, User
 
-template_dir = current_app.config['TEMPLATE_PATH']
-bp = Blueprint('registration', __name__, template_folder=template_dir)
 
+bp = Blueprint('registration', __name__, template_folder=current_app.config['TEMPLATE_PATH'])
 
-@bp.route('/login', methods=['GET'])
+# вход
+@bp.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('login.html')
+    if request.method == 'GET':
+        if 'user_id' in session:
+            return redirect(url_for('main.index'))
+        return render_template('login.html')
 
-@bp.route('/signup', methods=['GET'])
-def signup():
-    return render_template('signup.html')
+    username = request.form.get('username', '').strip()
+    password = request.form.get('password', '')
+
+    user = User.query.filter_by(username=username).first()
+
+    if not user or user.password_sha256 != hash_password(password):
+        flash("Неверное имя пользователя или пароль", 'danger')
+        return render_template('login.html', username=username)
+
+    session['user_id'] = user.id
+    session['username'] = user.username
+    session['privileges'] = user.privileges
+    session['elo'] = user.elo
+
+    flash(f"Добро пожаловать, {user.username}!", 'success')
+    return redirect(url_for('main.index'))
+
+# регистрация
+@bp.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'GET':
+        if 'user_id' in session:
+            return redirect(url_for('main.index'))
+        return render_template('register.html')
+
+    username = request.form.get('username', '').strip()
+    password = request.form.get('password', '')
+    password_confirm = request.form.get('password_confirm', '')
+
+    is_valid, error = validate_username(username)
+    if not is_valid:
+        flash(error, 'danger')
+        return render_template('register.html')
+
+    is_valid, error = validate_password(password)
+    if not is_valid:
+        flash(error, 'danger')
+        return render_template('register.html')
+
+    if password != password_confirm:
+        flash("Пароли не совпадают", 'danger')
+        return render_template('register.html')
+
+    if User.query.filter_by(username=username).first():
+        flash("Пользователь с таким именем уже существует", 'danger')
+        return render_template('register.html')
+
+    try:
+        new_user = User(
+            username=username,
+            password_sha256=hash_password(password),
+            privileges=0,
+            elo=current_app.config['DEFAULT_ELO']
+        )
+
+        db.session.add(new_user)
+        db.session.commit()
+
+        session['user_id'] = new_user.id
+        session['username'] = new_user.username
+        session['privileges'] = new_user.privileges
+        session['elo'] = new_user.elo
+
+        flash("Регистрация успешна! Добро пожаловать!", 'success')
+        return redirect(url_for('main.index'))
+
+    except Exception as e:
+        db.session.rollback()
+        flash(f"Ошибка при регистрации: {str(e)}", 'danger')
+        return render_template('register.html')
 
 @bp.route('/logout', methods=['GET'])
 def logout():
-    return render_template('logout.html')
+    session.clear()
+    return redirect(url_for('main.index'))
