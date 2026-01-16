@@ -3,6 +3,30 @@
 {% block title %}Войти{% endblock %}
 
 {% block content %}
-<h1 class="container header__inner">Nerd Fight - войти</h1>
-<a href="{{ url_for('registration.register') }}">Нет аккаунта?</a>
+<h2>Вход</h2>
+<form method="POST" action="{{ url_for('registration.login') }}" class="form">
+    <div class="form__group">
+        <label for="username">Имя пользователя:</label>
+        <input type="text" id="username" name="username"
+               value=""
+               required minlength="3" maxlength="32"
+               pattern="[a-zA-Z0-9_]+"
+               title="Только буквы, цифры и нижние подчёркивания"
+               class="input">
+        <small class="form__message">От 3 до 32 символов</small>
+    </div>
+
+    <div class="form__group">
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" name="password"
+               required minlength="8" class="input" title="Пароль">
+        <small class="form__message">Минимум 8 символов</small>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Войти</button>
+
+    <div class="form__message">
+        Нет аккаунта? <a href="{{ url_for('registration.register') }}">Зарегистрироваться</a>
+    </div>
+</form>
 {% endblock %}

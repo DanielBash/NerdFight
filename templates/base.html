@@ -29,14 +29,16 @@
 </header>
 
 <main class="main">
+    <section class="hero">
   {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                    <div class="form__message">{{ message }}</div>
+                    <p class="form__message hero__subtitle">{{ message }}</p>
                 {% endfor %}
             {% endif %}
         {% endwith %}
   {% block content %}{% endblock %}
+        </section>
 </main>
 
 </body>

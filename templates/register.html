@@ -3,7 +3,6 @@
 {% block title %}Зарегистрироваться{% endblock %}
 
 {% block content %}
-<section class="hero">
 <h2>Регистрация</h2>
 <form method="POST" action="{{ url_for('registration.register') }}" class="form">
     <div class="form__group">
@@ -20,14 +19,14 @@
     <div class="form__group">
         <label for="password">Пароль:</label>
         <input type="password" id="password" name="password"
-               required minlength="8" class="input">
+               required minlength="8" class="input" title="Пароль">
         <small class="form__message">Минимум 8 символов</small>
     </div>
 
     <div class="form__group">
         <label for="password_confirm">Подтверждение пароля:</label>
         <input type="password" id="password_confirm" name="password_confirm"
-               required minlength="8" class="input">
+               required minlength="8" class="input" title="Подтверждение пароля">
     </div>
 
     <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
@@ -36,5 +35,4 @@
         Уже есть аккаунт? <a href="{{ url_for('registration.login') }}">Войти</a>
     </div>
 </form>
-</section>
 {% endblock %}
