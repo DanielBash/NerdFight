@@ -21,9 +21,6 @@ class Config:
     # настройки путей
     STATIC_PATH = Path('static')
     TEMPLATE_PATH = Path('templates')
-    SESSION_COOKIE_HTTPONLY=True
-    SESSION_COOKIE_SECURE=True if os.environ.get('FLASK_ENV') == 'production' else False
-    SESSION_COOKIE_SAMESITE='Lax'
 
     # хранение сессий на сервере
     SESSION_TYPE='filesystem'
