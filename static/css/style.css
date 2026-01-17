@@ -29,12 +29,20 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  height: 100%;
+}
+
 body {
   margin: 0;
   font-family: var(--font-main);
   background-color: var(--color-bg);
   color: var(--color-text);
   line-height: 1.6;
+
+  display: flex;
+  flex-direction: column;
 }
 
 a {
@@ -103,6 +111,16 @@ p {
 }
 
 /* =========================
+   MAIN (VERTICAL CENTER)
+   ========================= */
+main.container,
+.main {
+  flex: 1;
+  display: flex;
+  align-items: center; /* вертикальное центрирование */
+}
+
+/* =========================
    BUTTONS
    ========================= */
 .btn {
@@ -145,7 +163,6 @@ p {
    ========================= */
 .form {
   max-width: 400px;
-  margin: 0 auto;
 }
 
 .form__group {
@@ -192,6 +209,7 @@ p {
    MAIN PAGE
    ========================= */
 .hero {
+  width: 100%;
   padding: var(--spacing-lg) 0;
   text-align: center;
 }
@@ -205,11 +223,18 @@ p {
   font-size: 12px;
 }
 
+/* =========================
+   ACTIONS
+   ========================= */
 .actions {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: var(--spacing-md);
   margin-top: var(--spacing-lg);
+
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .actions__item {
@@ -217,17 +242,27 @@ p {
   background: var(--color-bg-secondary);
   border: 1px solid #222;
   border-radius: var(--border-radius);
+
+  display: flex;
+  justify-content: center;
 }
+
+/* Центрирование одиночного элемента под GitHub */
+@media (min-width: 769px) {
+  .actions__item--center {
+    grid-column: 1 / -1;
+    justify-self: center;
+    max-width: 300px;
+    width: 100%;
+  }
+}
+
 
 /* =========================
    MOBILE
    ========================= */
 @media (max-width: 768px) {
   h1 { font-size: 22px; }
-
-  .actions {
-    grid-template-columns: 1fr;
-  }
 
   .header__inner {
     flex-direction: column;
