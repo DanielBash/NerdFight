@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>{% block title %}{{title or "Nerd Fight"}}{% endblock %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/font.css') }}" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}?v={{ range(1000)|random }}">
 </head>
@@ -12,7 +12,7 @@
 
 <header class="header">
   <div class="container header__inner">
-    <div class="header__logo">NERD FIGHT</div>
+      <a href="{{ url_for('main.index') }}"><div class="header__logo">NERD FIGHT</div></a>
 
     <div class="header__user">
       <!-- если не авторизован -->
