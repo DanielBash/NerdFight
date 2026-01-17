@@ -2,7 +2,8 @@
 # - импортирование модулей
 from flask import Flask
 from config import *
-from models import db
+from models import db, User
+from blueprints.registration.validation import hash_password
 
 
 # - инициализация приложения
@@ -30,7 +31,17 @@ def create_app(config_name='default') -> Flask:
         app.register_blueprint(users_bp, url_prefix='/users')
 
         db.create_all()
-        app.config['DATABASE_INSTANCE'] = db
+
+        if not User.query.filter_by(username=app.config['DEFAULT_ADMIN_USERNAME']).first():
+            admin_user = User(
+                username=app.config['DEFAULT_ADMIN_USERNAME'],
+                password_sha256=hash_password(app.config['DEFAULT_ADMIN_PASSWORD']),
+                privileges=0,
+                elo=app.config['DEFAULT_ELO']
+            )
+
+            db.session.add(admin_user)
+            db.session.commit()
 
     return app
 

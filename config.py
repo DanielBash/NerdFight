@@ -37,6 +37,10 @@ class Config:
     DEFAULT_ELO = 1000
     DEFAULT_ELO_K = 32
 
+    # настройки пользователей
+    DEFAULT_ADMIN_USERNAME = os.environ.get('DEFAULT_ADMIN_USERNAME', 'admin')
+    DEFAULT_ADMIN_PASSWORD = os.environ.get('DEFAULT_ADMIN_PASSWORD', 'password')
+
     @staticmethod
     def get_openai_client():
         return OpenAI(
