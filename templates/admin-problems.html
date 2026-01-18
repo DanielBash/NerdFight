@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Задачи{% endblock %}
+
+{% block content %}
+<h1 class="hero__title accent-color"><a href="{{ url_for('admin.index') }}">Админка</a>: Задачи</h1>
+    <p class="hero__subtitle">Список всех задач сайта. Назад в <a href="{{ url_for('admin.index') }}">админ-панель</a>, или
+    <a href="{{ url_for('admin.problems_create') }}">создать задачу</a>? Или у вас есть <a href="{{ url_for('admin.problems_export') }}">целый файл</a> с задачами?</p>
+{% if problems %}
+<div class="table-wrapper">
+  <table class="table table--center">
+    <thead>
+      <tr>
+        <th><a href="{{ url_for('admin.problems', page=0, sort='id') }}">
+         ID
+      </a></th>
+        <th><a href="{{ url_for('admin.problems', page=0, sort='name') }}">
+         НАЗВАНИЕ
+      </a></th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for problem in problems %}
+      <tr>
+        <td>{{problem.id}}</td>
+        <td><a class="row-link" href="{{ url_for('admin.problems_edit', name=problem.name) }}">{{problem.name}}</a></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div class="actions">
+  {% if has_prev %}
+    <a class="btn btn--secondary"
+       href="{{ url_for('admin.problems', page=current_page-1, sort=current_sort) }}">
+       ← Назад
+    </a>
+  {% endif %}
+
+  {% if has_next %}
+    <a class="btn btn--secondary"
+       href="{{ url_for('admin.problems', page=current_page+1, sort=current_sort) }}">
+       Вперед →
+    </a>
+  {% endif %}
+</div>
+{% else %}
+<p class="hero__subtitle">Задач еще нет... Почему бы не добавить пару штук?</p>
+{% endif %}
+{% endblock %}

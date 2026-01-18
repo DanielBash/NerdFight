@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Редактирование пользователя{% endblock %}
+
+{% block content %}
+<h1 class="hero__title accent-color">Админка: Редактирование пользователя</h1>
+<form method="POST" action="{{ url_for('admin.users_edit', username=viewing_user.username) }}" class="form">
+    <div class="form__group">
+        <label for="username">Имя пользователя:</label>
+        <input type="text" id="username" name="username"
+               value="{{viewing_user.username}}"
+               minlength="1" maxlength="32"
+               pattern="[a-zA-Z0-9_]+"
+               title="Только буквы, цифры и нижние подчёркивания"
+               class="input">
+    </div>
+
+    <div class="form__group">
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" name="password"
+               class="input" title="Пароль">
+    </div>
+
+    <div class="form__group">
+        <label for="privileges">Права:</label>
+        <input type="number" id="privileges" name="privileges"
+               class="input" title="Права" value="{{viewing_user.privileges}}">
+    </div>
+
+    <div class="form__group">
+        <label for="privileges">Elo:</label>
+        <input type="number" id="elo" name="elo"
+               class="input" title="elo" value="{{viewing_user.elo}}">
+    </div>
+
+    <button type="submit" class="btn btn-primary" style="margin-bottom:7px">Сохранить изменения</button>
+    <button type="button" class="btn btn-secondary" onclick="confirmDelete()">Удалить пользователя</button>
+
+    <div class="form__message">
+        Назад к просмотру <a href="{{ url_for('admin.users') }}">пользователей</a>.
+    </div>
+</form>
+
+<form id="deleteForm" method="POST" action="{{ url_for('admin.users_delete', username=viewing_user.username) }}">
+    <button type="submit" class="btn btn-danger" id="deleteBtn" style="display: none;">Удалить пользователя</button>
+</form>
+
+<script>
+function confirmDelete() {
+    document.getElementById('deleteBtn').click();
+}
+</script>
+
+{% endblock %}

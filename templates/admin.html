@@ -2,5 +2,21 @@
 
 {% block title %}Админ панель{% endblock %}
 {% block content %}
-<h1 class="container header__inner">Nerd Fight - админ-панель</h1>
+<h1 class="hero__title accent-color">Админ-панель</h1>
+    <p class="hero__subtitle">
+      Немного статистики сервера:<br/>
+        <span class="accent-color">Нагрузка:</span>{{load_avg}}%<br/>
+        <span class="accent-color">Сервер работает:</span>{{uptime_sec}} секунд<br/>
+      Немного статистики приложения:<br/>
+        <span class="accent-color">Всего пользователей:</span>{{users_count}}<br/>
+        <span class="accent-color">Всего задач:</span>{{problems_count}}<br/>
+    </p>
+<div class="actions">
+      <div class="actions__item">
+        <a class="btn btn--secondary" href="{{ url_for('admin.problems') }}">Задачи</a>
+      </div>
+    <div class="actions__item">
+        <a class="btn btn--secondary" href="{{ url_for('admin.users') }}">Пользователи</a>
+      </div>
+</div>
 {% endblock %}

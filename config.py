@@ -5,8 +5,10 @@ from openai import OpenAI
 from dotenv import load_dotenv
 import os
 from pathlib import Path
+import re
 
 load_dotenv()
+
 
 # -- базовая конфигурация
 class Config:
@@ -17,6 +19,11 @@ class Config:
 
     # настройки ИИ модели
     MODEL_API_KEY = os.environ.get('MODEL_API_KEY', 'model-api-key')
+    MODEL_BASE = "https://api.deepseek.com"
+    MODEL_NEW_PROBLEM_PROMPT = '''Ты - копирайтер. Мастер переформулировок и любитель переделывать задачки, давая им 
+новый смысл. Пользователь пришлет тебе задачку. Переделай ее, переформулируй. Положи условие задачи в тег 
+<content>, а ответ в тег <answer>, вот так: <content>Сколько будет 2+2?</content><answer>2</answer>. Не бойся 
+глобально переделывать задачи. Главное, оставь алгоритм решения таким же'''
 
     # Настройка сессий
     SESSION_COOKIE_HTTPONLY = True
@@ -28,10 +35,10 @@ class Config:
     TEMPLATE_PATH = Path('templates')
 
     # хранение сессий на сервере
-    SESSION_TYPE='filesystem'
-    SESSION_PERMANENT=False
-    SESSION_USE_SIGNER=True
-    SESSION_KEY_PREFIX='auth:'
+    SESSION_TYPE = 'filesystem'
+    SESSION_PERMANENT = False
+    SESSION_USE_SIGNER = True
+    SESSION_KEY_PREFIX = 'auth:'
 
     # настройки elo
     DEFAULT_ELO = 1000
@@ -40,21 +47,23 @@ class Config:
     # настройки пользователей
     DEFAULT_ADMIN_USERNAME = os.environ.get('DEFAULT_ADMIN_USERNAME', 'admin')
     DEFAULT_ADMIN_PASSWORD = os.environ.get('DEFAULT_ADMIN_PASSWORD', 'password')
+    MAX_CONTENT_LENGTH = 16 * 1024 * 1024
+    ALLOWED_EXTENSIONS = ['csv', 'json']
 
-    @staticmethod
-    def get_openai_client():
-        return OpenAI(
-            api_key=Config.MODEL_API_KEY,
-            base_url="https://api.deepseek.com"
-        )
+    # настройки админ панели
+    PROBLEMS_PAGINATION_ADMIN = 20
+    USERS_PAGINATION_ADMIN = 20
+
 
 # -- конфигурация для разработки
 class DevelopmentConfig(Config):
     DEBUG = True
 
+
 # -- конфигурация для продакшена
 class ProductionConfig(Config):
     DEBUG = False
+
 
 CONFIGS = {
     'default': Config(),

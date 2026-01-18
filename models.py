@@ -4,16 +4,18 @@
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import CheckConstraint
+from blueprints.registration import validation
 
 db = SQLAlchemy()
 
 # - связь пользователя с задачей
 solved_problems = db.Table('solved_problems',
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
-    db.Column('problem_id', db.Integer, db.ForeignKey('problems.id'), primary_key=True),
-    db.Column('solved_at', db.DateTime, default=datetime.now),
-    db.Column('attempts_count', db.Integer, default=1),
-)
+                           db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
+                           db.Column('problem_id', db.Integer, db.ForeignKey('problems.id'), primary_key=True),
+                           db.Column('solved_at', db.DateTime, default=datetime.now),
+                           db.Column('attempts_count', db.Integer, default=1),
+                           )
+
 
 # -- таблица пользователя
 class User(db.Model):
@@ -112,15 +114,17 @@ class User(db.Model):
             )
             db.session.execute(stmt)
 
+
 # -- задачи
 class Problem(db.Model):
     __tablename__ = 'problems'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(256), nullable=False)
+    name = db.Column(db.String(256), nullable=False, unique=True)
 
     content = db.Column(db.Text, nullable=False)
     answer = db.Column(db.Text, nullable=False)
+
 
 # -- матчи
 class Match(db.Model):

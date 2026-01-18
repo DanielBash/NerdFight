@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Создать задачу{% endblock %}
+
+{% block content %}
+<h1 class="hero__title accent-color">Админка: Создание задачи</h1>
+<form method="POST" action="{{ url_for('admin.problems_create') }}" class="form">
+    <div class="form__group">
+        <label for="name">Название:</label>
+        <input type="text" id="name" name="name"
+               value=""
+               minlength="1" maxlength="256"
+               title="Название"
+               class="input">
+    </div>
+
+    <div class="form__group">
+        <label for="content">Звучание:</label>
+        <textarea id="content" name="content" class="input" rows="6" cols="50" title="Звучание задачи"></textarea>
+    </div>
+
+    <div class="form__group">
+        <label for="answer">Правильный ответ:</label>
+        <input type="text" id="answer" name="answer"
+               class="input" title="Права">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Добавить задачу</button>
+</form>
+<div class="form__message">
+        Назад к просмотру <a href="{{ url_for('admin.problems') }}">задач</a>
+</div>
+{% endblock %}

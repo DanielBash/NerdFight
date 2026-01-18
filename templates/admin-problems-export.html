@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Загрузка файла с задачами{% endblock %}
+
+{% block content %}
+<h1 class="hero__title accent-color">Админка: Загрузка файла с задачами</h1>
+<p class="hero__subtitle">Тут можно загрузить файл с задачами на сервер.
+      Поддерживается JSON и CSV. Вернуться назад к <a href="{{ url_for('admin.problems') }}">списку задач</a>?</p>
+<form method=post enctype=multipart/form-data class="form">
+      <input type=file name=file>
+      <input type=submit value=Отправить class="btn">
+</form>
+<p class="hero__subtitle">Загрузить текущую базу задач в <a href="{{ url_for('admin.problems_export_json') }}">JSON</a> или
+      <a href="{{ url_for('admin.problems_export_csv') }}">CSV</a>?</p>
+{% endblock %}

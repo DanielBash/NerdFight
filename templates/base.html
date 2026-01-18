@@ -17,11 +17,11 @@
     <div class="header__user">
       <!-- если не авторизован -->
         {% if session.user_id %}
-        <a href="{{ url_for('users.user', username=session.username) }}">{{session.username}}</a>
+        <a href="{{ url_for('users.user', username=user.username) }}">{{user.username}}</a>
 
       <!-- если авторизован -->
         {% else %}
-        <a href="{{ url_for('registration.register') }}">Авторизоваться</a>
+        <a href="{{ url_for('registration.login') }}">Авторизоваться</a>
         {% endif %}
       <!-- <span class="accent-color">username</span> -->
     </div>

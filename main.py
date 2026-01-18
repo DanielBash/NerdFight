@@ -4,6 +4,7 @@ from flask import Flask
 from config import *
 from models import db, User
 from blueprints.registration.validation import hash_password
+from flask import g, session
 
 
 # - инициализация приложения
@@ -23,6 +24,11 @@ def create_app(config_name='default') -> Flask:
         from blueprints.problems.routes import bp as problems_bp
         from blueprints.users.routes import bp as users_bp
 
+        from blueprints.registration.routes import inject_user, load_user
+
+        app.context_processor(inject_user)
+        app.before_request(load_user)
+
         app.register_blueprint(main_bp)
         app.register_blueprint(registration_bp, url_prefix='/registration')
         app.register_blueprint(admin_bp, url_prefix='/admin')
@@ -36,7 +42,7 @@ def create_app(config_name='default') -> Flask:
             admin_user = User(
                 username=app.config['DEFAULT_ADMIN_USERNAME'],
                 password_sha256=hash_password(app.config['DEFAULT_ADMIN_PASSWORD']),
-                privileges=0,
+                privileges=1,
                 elo=app.config['DEFAULT_ELO']
             )
 
@@ -47,6 +53,7 @@ def create_app(config_name='default') -> Flask:
 
 
 app = create_app(config_name=CURRENT_CONFIG_NAME)
+
 
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0', port=50000)

@@ -5,18 +5,9 @@
 {% block content %}
     <h1 class="hero__title accent-color">NERD FIGHT</h1>
     <p class="hero__subtitle">
-      Интернет ресурс для быстрой и интуитивной подготовки к олимпиадным соревнованиям по математике c <span class="accent-color">геймификацией</span>
+      Интернет ресурс для быстрой и интуитивной подготовки к олимпиадным соревнованиям c <span class="accent-color">геймификацией</span>
     </p>
-    <div class="actions">{% if not session.user_id %}
-      <div class="actions__item">
-        <a class="btn btn--primary" href="{{ url_for('registration.register') }}">Авторизация</a>
-      </div>
-    {% endif %}
-
-      <div class="actions__item">
-        <a class="btn btn--secondary" href="https://github.com/DanielBash/NerdFight">GitHub</a>
-      </div>
-
+<div class="actions">
       <div class="actions__item">
         <a class="btn btn--secondary" href="{{ url_for('problems.problems') }}">Список задач</a>
       </div>
@@ -24,10 +15,25 @@
       <div class="actions__item">
         <a class="btn btn--secondary" href="{{ url_for('users.users') }}">Лидерборд</a>
       </div>
-        {% if session.privileges == 1 %}
+        {% if user.privileges == 1 %}
         <div class="actions__item">
         <a class="btn btn--secondary" href="{{ url_for('admin.index') }}">Админка</a>
       </div>
         {% endif %}
+        {% if not session.user_id %}
+      <div class="actions__item">
+        <a class="btn btn--secondary" href="{{ url_for('registration.login') }}">Авторизация</a>
+      </div>
+        {% else %}
+  <div class="actions__item">
+        <a class="btn btn--secondary" href="{{ url_for('fight.index') }}">Сражаться</a>
+      </div>
+        <div class="actions__item">
+        <a class="btn btn--secondary" href="{{ url_for('registration.logout') }}">Выйти</a>
+      </div>
+        {% endif %}
+      <div class="actions__item">
+        <a class="btn btn--secondary" target="_blank" rel="noopener noreferrer" href="https://github.com/DanielBash/NerdFight">GitHub</a>
+      </div>
     </div>
 {% endblock %}

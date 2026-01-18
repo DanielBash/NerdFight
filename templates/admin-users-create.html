@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Создать пользователя{% endblock %}
+
+{% block content %}
+<h1 class="hero__title accent-color">Админка: Создание пользователя</h1>
+<form method="POST" action="{{ url_for('admin.users_create') }}" class="form">
+    <div class="form__group">
+        <label for="username">Имя пользователя:</label>
+        <input type="text" id="username" name="username"
+               value=""
+               minlength="1" maxlength="32"
+               pattern="[a-zA-Z0-9_]+"
+               title="Только буквы, цифры и нижние подчёркивания"
+               class="input">
+    </div>
+
+    <div class="form__group">
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" name="password"
+               class="input" title="Пароль">
+    </div>
+
+    <div class="form__group">
+        <label for="privileges">Права:</label>
+        <input type="number" id="privileges" name="privileges"
+               class="input" title="Права">
+    </div>
+
+    <div class="form__group">
+        <label for="privileges">Elo:</label>
+        <input type="number" id="elo" name="elo"
+               class="input" title="elo">
+        <small class="form__message">Рейтинг среди игроков</small>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Создать пользователя</button>
+</form>
+<div class="form__message">
+        Назад к просмотру <a href="{{ url_for('admin.users') }}">пользователей</a>
+</div>
+{% endblock %}

@@ -2,15 +2,33 @@
 
 # -- импорт модулей
 import datetime
-from flask import current_app, redirect, url_for, flash
+from flask import current_app, redirect, url_for, flash, g
 from flask import Blueprint, render_template, request, jsonify, session
 import os, re, hashlib
 from werkzeug.security import generate_password_hash, check_password_hash
 from .validation import *
 from models import db, User
 
-
 bp = Blueprint('registration', __name__, template_folder=current_app.config['TEMPLATE_PATH'])
+
+
+# получить пользователя
+def inject_user():
+    user_id = session.get('user_id')
+    if user_id is None:
+        user = None
+    else:
+        user = User.query.get(user_id)
+    return dict(user=user)
+
+
+def load_user():
+    user_id = session.get('user_id')
+    if user_id is None:
+        g.user = None
+    else:
+        g.user = User.query.get(user_id)
+
 
 # вход
 @bp.route('/login', methods=['GET', 'POST'])
@@ -30,12 +48,10 @@ def login():
         return render_template('login.html', username=username)
 
     session['user_id'] = user.id
-    session['username'] = user.username
-    session['privileges'] = user.privileges
-    session['elo'] = user.elo
 
     flash(f"Добро пожаловать, {user.username}!", 'success')
     return redirect(url_for('main.index'))
+
 
 # регистрация
 @bp.route('/register', methods=['GET', 'POST'])
@@ -79,9 +95,6 @@ def register():
         db.session.commit()
 
         session['user_id'] = new_user.id
-        session['username'] = new_user.username
-        session['privileges'] = new_user.privileges
-        session['elo'] = new_user.elo
 
         flash("Регистрация успешна! Добро пожаловать!", 'success')
         return redirect(url_for('main.index'))
@@ -90,6 +103,7 @@ def register():
         db.session.rollback()
         flash(f"Ошибка при регистрации: {str(e)}", 'danger')
         return render_template('register.html')
+
 
 @bp.route('/logout', methods=['GET'])
 def logout():
