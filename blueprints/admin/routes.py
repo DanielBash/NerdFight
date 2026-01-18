@@ -27,9 +27,7 @@ def index():
 
     return render_template('admin.html',
                            users_count=users_count,
-                           problems_count=problems_count,
-                           load_avg=load_avg,
-                           uptime_sec=uptime_sec)
+                           problems_count=problems_count)
 
 
 # -- задачи
