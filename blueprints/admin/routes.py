@@ -146,6 +146,9 @@ def problems_edit(name):
     name = request.form.get('name', '').strip()
     content = request.form.get('content', '')
     answer = request.form.get('asnwer', '')
+    if Problem.query.filter_by(name=name).first():
+        flash('Такая задача уже есть')
+        return render_template('admin-problems-edit.html', problem=problem)
 
     if name != '':
         problem.name = name
