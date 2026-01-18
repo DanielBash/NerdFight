@@ -25,9 +25,6 @@ def index():
     users_count = db.session.query(User).count()
     problems_count = db.session.query(Problem).count()
 
-    load_avg = psutil.cpu_percent(interval=1)
-    uptime_sec = int(time.time() - psutil.boot_time())
-
     return render_template('admin.html',
                            users_count=users_count,
                            problems_count=problems_count,
