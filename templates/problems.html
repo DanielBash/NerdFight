@@ -4,4 +4,35 @@
 
 {% block content %}
 <h1 class="container header__inner">Nerd Fight - список задач</h1>
+<div class="container">
+    <h1><a href="/">Назад</a></h1>
+</div>
+<div class="container">
+    {% if problems %}
+        {% for problem in problems %}
+          <tr>
+            <td>{{problem.id}}</td>
+            <td><a class="row-link" href="{{ url_for('problems.problems', name=problem.name) }}">{{problem.name}}</a></td>
+          </tr>
+        {% endfor %}
+        <div class="actions">
+            {% if has_prev %}
+                <a class="btn btn--secondary"
+                 href="{{ url_for('problems.problems', page=current_page-1, sort=current_sort) }}">
+                ← Назад
+                </a>
+            {% endif %}
+
+            {% if has_next %}
+                <a class="btn btn--secondary"
+                href="{{ url_for('problems.problems', page=current_page+1, sort=current_sort) }}">
+                Вперед →
+                </a>
+            {% endif %}
+    {% else %}
+    <p class="hero__subtitle">Тут пока что ничего нет</p>
+    {% endif %}
+    </div>
+</div>
+
 {% endblock %}
