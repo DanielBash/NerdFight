@@ -29,20 +29,12 @@
   box-sizing: border-box;
 }
 
-html,
-body {
-  height: 100%;
-}
-
 body {
   margin: 0;
   font-family: var(--font-main);
   background-color: var(--color-bg);
   color: var(--color-text);
   line-height: 1.6;
-
-  display: flex;
-  flex-direction: column;
 }
 
 a {
@@ -108,16 +100,6 @@ p {
 
 .header__user {
   font-size: 12px;
-}
-
-/* =========================
-   MAIN (VERTICAL CENTER)
-   ========================= */
-main.container,
-.main {
-  flex: 1;
-  display: flex;
-  align-items: center; /* вертикальное центрирование */
 }
 
 /* =========================
@@ -209,7 +191,6 @@ main.container,
    MAIN PAGE
    ========================= */
 .hero {
-  width: 100%;
   padding: var(--spacing-lg) 0;
   text-align: center;
 }
@@ -223,18 +204,11 @@ main.container,
   font-size: 12px;
 }
 
-/* =========================
-   ACTIONS
-   ========================= */
 .actions {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: var(--spacing-md);
   margin-top: var(--spacing-lg);
-
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .actions__item {
@@ -242,21 +216,7 @@ main.container,
   background: var(--color-bg-secondary);
   border: 1px solid #222;
   border-radius: var(--border-radius);
-
-  display: flex;
-  justify-content: center;
 }
-
-/* Центрирование одиночного элемента под GitHub */
-@media (min-width: 769px) {
-  .actions__item--center {
-    grid-column: 1 / -1;
-    justify-self: center;
-    max-width: 300px;
-    width: 100%;
-  }
-}
-
 
 /* =========================
    MOBILE
@@ -264,93 +224,44 @@ main.container,
 @media (max-width: 768px) {
   h1 { font-size: 22px; }
 
+  .actions {
+    grid-template-columns: 1fr;
+  }
+
   .header__inner {
     flex-direction: column;
     gap: var(--spacing-sm);
   }
-}
 
-/* =========================
-   TABLES
-   ========================= */
-.table-wrapper {
-  width: 100%;
-  overflow-x: auto;
-  margin: var(--spacing-lg) auto;
-  max-width: 900px;
-}
+  /* vertical-center только для desktop */
+  main.container {
+    align-items: flex-start;
+  }
 
-.table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  font-family: var(--font-main);
-  font-size: 10px;
-  background: var(--color-bg-secondary);
-  border: 1px solid #222;
-  border-radius: var(--border-radius);
-  overflow: hidden;
-}
+  /* hero компактнее */
+  .hero {
+    padding: 16px 0;
+  }
 
-.table thead {
-  background: #101010;
-}
+  .hero__title {
+    font-size: 22px;
+  }
 
-.table th,
-.table td {
-  padding: 10px 12px;
-  text-align: left;
-  border-bottom: 1px solid #222;
-}
+  .hero__subtitle {
+    font-size: 10px;
+    line-height: 1.5;
+  }
 
-.table th {
-  color: var(--color-accent);
-  font-weight: 400;
-  font-size: 9px;
-}
+  /* кнопки в столбик */
+  .actions {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 16px;
+  }
 
-.table td {
-  color: var(--color-muted);
-}
-
-.table tr:last-child td {
-  border-bottom: none;
-}
-
-
-.table thead tr th:first-child { border-top-left-radius: var(--border-radius); }
-.table thead tr th:last-child  { border-top-right-radius: var(--border-radius); }
-.table tbody tr:last-child td:first-child { border-bottom-left-radius: var(--border-radius); }
-.table tbody tr:last-child td:last-child  { border-bottom-right-radius: var(--border-radius); }
-
-
-.table--compact th,
-.table--compact td {
-  padding: 6px 8px;
-  font-size: 9px;
-}
-
-.table--center td,
-.table--center th {
-  text-align: center;
-}
-
-.row-link {
-  display: block;
-  text-decoration: none;
-  color: inherit;  /* Matches table text color */
-  padding: 12px;   /* Matches typical td padding */
-}
-html {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
-
-html::-webkit-scrollbar {
-  display: none;  /* Chrome, Safari, Opera */
-}
-
-.hero .form {
-  margin-left: auto;
-  margin-right: auto;
+  /* удобнее нажимать */
+  .btn {
+    width: 100%;
+    padding: 14px;
+  }
 }
