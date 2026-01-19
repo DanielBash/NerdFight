@@ -9,7 +9,6 @@ import csv
 import io
 import json
 import openai
-import psutil
 from flask import current_app, g, flash, redirect, url_for, request, send_file
 from flask import Blueprint, render_template
 from models import validation, User, db, Problem

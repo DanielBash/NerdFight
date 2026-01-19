@@ -47,7 +47,7 @@ def problems():
 
     problem_list = (
         problem_query
-        .limit([per_page])
+        .limit(per_page)
         .offset(page * per_page)
         .all()
     )
