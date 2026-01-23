@@ -10,9 +10,9 @@
         <th>Username</th>
         <th>Elo</th>
     </tr>
-    {% for i, u in users_data %}
+    {% for u in users_data %}
     <tr>
-        <td>{{i}}</td>
+        <td>{{loop.index}}</td>
         <td>{{u.username}}</td>
         <td>{{u.elo}}</td>
     </tr>

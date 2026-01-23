@@ -14,7 +14,6 @@ bp = Blueprint('users', __name__, template_folder=template_dir)
 @bp.route('/', methods=['GET'])
 def users():
     users_data = User.query.order_by(User.elo).all()
-    users_data = zip(range(1, 100), users_data)
     return render_template('users.html', users_data=users_data)
 
 @bp.route('/<string:username>', methods=['GET'])
