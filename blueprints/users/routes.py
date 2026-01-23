@@ -13,6 +13,7 @@ bp = Blueprint('users', __name__, template_folder=template_dir)
 
 @bp.route('/', methods=['GET'])
 def users():
+    # получение рейтинга пользователей
     users_data = User.query.order_by(User.elo).all()
     return render_template('users.html', users_data=users_data)
 
