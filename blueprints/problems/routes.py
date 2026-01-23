@@ -20,6 +20,8 @@ def problems():
     per_page = current_app.config['PROBLEMS_PAGINATION_ADMIN']
 
     problem_query = Problem.query
+    if sort == 'name':
+        problem_query = Problem.query.order_by(Problem.name)
     # Общее количество элементов
     total_items = problem_query.count()
 
