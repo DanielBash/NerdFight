@@ -4,4 +4,18 @@
 
 {% block content %}
 <h1 class="container header__inner">Nerd Fight - пользователи</h1>
+<table class="table table--center">
+    <tr>
+        <th>Range</th>
+        <th>Username</th>
+        <th>Elo</th>
+    </tr>
+    {% for i, u in users_data %}
+    <tr>
+        <td>{{i}}</td>
+        <td>{{u.username}}</td>
+        <td>{{u.elo}}</td>
+    </tr>
+    {% endfor %}
+</table>
 {% endblock %}
