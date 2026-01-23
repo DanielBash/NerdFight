@@ -24,7 +24,7 @@
     {% for problem in problems %}
       <tr>
         <td>{{problem.id}}</td>
-        <td><a class="row-link" href="{{ url_for('problem.problem', name=problem.name) }}">{{problem.name}}</a></td>
+        <td><a class="row-link" href="{{ url_for('problems.problem', name=problem.name) }}">{{problem.name}}</a></td>
       </tr>
     {% endfor %}
     </table>
