@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Пользователи{% endblock %}
+
+{% block content %}
+<h1 class="hero__title accent-color">Решившие задачу</h1>
+    <p class="hero__subtitle">Список решивших задачу. Назад к <a href="{{ url_for('problems.problem', name=task.name) }}">задаче</a>?
+{% if users %}
+<div class="table-wrapper">
+  <table class="table table--center">
+    <thead>
+      <tr>
+        <th><a href="{{ url_for('problems.problem_solvers', page=0, sort='id', name=task.name) }}">
+         ID
+      </a></th>
+        <th><a href="{{ url_for('problems.problem_solvers', page=0, sort='username', name=task.name) }}">
+         НИКНЕЙМ
+      </a></th>
+        <th><a href="{{ url_for('problems.problem_solvers', page=0, sort='elo', name=task.name) }}">
+         ELO
+      </a>
+         <th>ПРАВА</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+      <tr>
+        <td>{{user.id}}</td>
+        <td><a class="row-link" href="{{ url_for('users.user', username=user.username) }}">{{user.username}}</a></td>
+        <td>{{user.elo}}</td>
+        <td>{{user.privileges}}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div class="actions">
+  {% if has_prev %}
+    <a class="btn btn--secondary"
+       href="{{ url_for('admin.users', page=current_page-1, sort=current_sort) }}">
+       ← Назад
+    </a>
+  {% endif %}
+
+  {% if has_next %}
+    <a class="btn btn--secondary"
+       href="{{ url_for('admin.users', page=current_page+1, sort=current_sort) }}">
+       Вперед →
+    </a>
+  {% endif %}
+</div>
+{% else %}
+<p class="hero__subtitle">Пользователей, решивших задачу еще нет</p>
+{% endif %}
+{% endblock %}

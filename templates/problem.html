@@ -3,5 +3,21 @@
 {% block title %}Задача{% endblock %}
 
 {% block content %}
-<h1 class="container header__inner">Nerd Fight - задача</h1>
+<h2>Задача: {{task.name}}</h2>
+<p>{{task.content}}</p>
+<form method="POST" action="{{ url_for('problems.problem', name=task.name) }}" class="form">
+    <div class="form__group">
+        <label for="answer">Введите свой ответ:</label>
+        <input type="text" id="answer" name="answer"
+               value=""
+               required minlength="3" maxlength="32"
+               title="Ответ"
+               class="input">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Отправить</button>
+    <div class="form__message"> <a href="{{ url_for('problems.problems') }}">Вернуться</a> к списку задач?
+        Или хотите просмотреть <a href="{{ url_for('problems.problem_solvers', name=task.name) }}">решивших задачу</a>?
+    </div>
+</form>
 {% endblock %}

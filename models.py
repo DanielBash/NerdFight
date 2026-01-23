@@ -29,7 +29,7 @@ class User(db.Model):
 
     elo = db.Column(db.Integer, default=1000)
 
-    solved_problems = db.relationship(
+    solved = db.relationship(
         'Problem',
         secondary=solved_problems,
         lazy='dynamic',
