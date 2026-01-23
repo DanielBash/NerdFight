@@ -71,7 +71,7 @@ def problems():
     )
 
 
-@bp.route('/<problem_id>', methods=['GET'])
+@bp.route('/<str:name>', methods=['GET'])
 def problem():
     tasks = Problem.query.filter(Problem.id == Problem.id).all()
     return render_template('problem.html', tasks=tasks)
