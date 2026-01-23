@@ -4,13 +4,15 @@
 
 {% block content %}
 <h2>Задача: {{task.name}}</h2>
-<p>{{task.content}}</p>
-<form method="POST" action="{{ url_for('problems.problem', name=task.name) }}" class="form">
+<div class="task-content">
+    {{ task.content | markdown }}
+</div>
+<form method="POST" action="{{ url_for('problems.problem_solve', name=task.name) }}" class="form">
     <div class="form__group">
         <label for="answer">Введите свой ответ:</label>
         <input type="text" id="answer" name="answer"
                value=""
-               required minlength="3" maxlength="32"
+               required
                title="Ответ"
                class="input">
     </div>
