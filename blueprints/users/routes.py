@@ -19,4 +19,5 @@ def users():
 
 @bp.route('/<string:username>', methods=['GET'])
 def user(username):
-    return render_template('user.html')
+    users_data = User.query.filter_by(username=username).first()
+    return render_template('user.html', user=users_data)

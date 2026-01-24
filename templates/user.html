@@ -3,5 +3,10 @@
 {% block title %}Пользователь{% endblock %}
 
 {% block content %}
-<h1 class="container header__inner">Nerd Fight - пользователь</h1>
+<h3 class="accent-color" style="font-size: 75px;">Пользователь:</h3>
+<h3 class="accent-color" style="font-size: 75px;">{{user.username}}</h3>
+<div>ELO: {{user.elo}}</div>
+{% if user.privileges == 1 %}
+    <div>Администратор</div>
+{% endif %}
 {% endblock %}
