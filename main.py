@@ -1,6 +1,8 @@
 """СКРИПТ: Файл запуска"""
 # - импортирование модулей
 from flask import Flask
+from markupsafe import Markup
+import markdown
 from config import *
 from models import db, User
 from blueprints.registration.validation import hash_password
@@ -48,6 +50,21 @@ def create_app(config_name='default') -> Flask:
 
             db.session.add(admin_user)
             db.session.commit()
+
+    def render_markdown(text):
+        html = markdown.markdown(
+            text,
+            extensions=[
+                "fenced_code",
+                "codehilite",
+                "tables",
+                "nl2br",
+                "sane_lists"
+            ]
+        )
+        return Markup(html)
+
+    app.jinja_env.filters["markdown"] = render_markdown
 
     return app
 

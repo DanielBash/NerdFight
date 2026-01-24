@@ -1,10 +1,11 @@
 """СКРИПТ:Пути для отображения задач пользователям"""
+from datetime import datetime
 
 # -- импорт модулей
-from flask import Blueprint, render_template, redirect, url_for, current_app
-from flask import request
-
-from models import Problem, validation, User
+from flask import Blueprint, render_template, redirect, url_for, current_app, flash
+from flask import request, g
+from sqlalchemy import select, update
+from models import Problem, validation, User, db, solved_problems
 
 bp = Blueprint('problems', __name__, template_folder='templates')
 
@@ -80,20 +81,26 @@ def problem(name):
 @validation.require_privileges(min_privileges=1)
 def problem_solvers(name):
     pagination_size = current_app.config['USERS_PAGINATION_ADMIN']
-    task = Problem.query.filter_by(name=name).first()
-    User_solved = task.solvers
+    task = Problem.query.filter_by(name=name).first_or_404()
 
-    page = request.args.get('page', 0, type=int)
+    page = request.args.get('page', 1, type=int)
     sort = request.args.get('sort', 'id')
 
+    user_query = (
+        User.query
+        .join(solved_problems, solved_problems.c.user_id == User.id)
+        .filter(
+            solved_problems.c.problem_id == task.id,
+            solved_problems.c.solved_at.isnot(None)
+        )
+    )
+
     if sort == 'id':
-        user_query = task.solvers.order_by(User.id)
+        user_query = user_query.order_by(User.id)
     elif sort == 'username':
-        user_query = task.solvers.order_by(User.username)
+        user_query = user_query.order_by(User.username)
     elif sort == 'elo':
-        user_query = task.solvers.order_by(User.elo)
-    else:
-        user_query = task.solvers
+        user_query = user_query.order_by(User.elo.desc())
 
     total = user_query.count()
 
@@ -111,7 +118,8 @@ def problem_solvers(name):
     last_page = (total - 1) // pagination_size
 
     if page > last_page:
-        return redirect(url_for('problems.problem_solvers', page=last_page, sort=sort))
+        return redirect(url_for('problems.problem_solvers', page=last_page, sort=sort,
+                                task=task, name=name))
 
     if page < 0:
         page = 0
@@ -135,3 +143,68 @@ def problem_solvers(name):
         has_prev=has_prev,
         task=task
     )
+
+
+from flask import request, redirect, url_for, flash, g
+from datetime import datetime
+
+
+@bp.route('/<string:name>/solve', methods=['POST'])
+@validation.require_privileges(min_privileges=0)
+def problem_solve(name):
+    task = Problem.query.filter_by(name=name).first_or_404()
+
+    user_answer = request.form.get('answer', '').strip().lower()
+    correct_answer = task.answer.strip().lower()
+
+    user_id = g.user.id
+
+    record = db.session.execute(
+        db.select(solved_problems).where(
+            solved_problems.c.user_id == user_id,
+            solved_problems.c.problem_id == task.id
+        )
+    ).mappings().first()
+
+    is_correct = user_answer == correct_answer
+
+    if record:
+        db.session.execute(
+            db.update(solved_problems)
+            .where(
+                solved_problems.c.user_id == user_id,
+                solved_problems.c.problem_id == task.id
+            )
+            .values(attempts_count=record["attempts_count"] + 1)
+        )
+
+        if is_correct and record["solved_at"] is None:
+            db.session.execute(
+                db.update(solved_problems)
+                .where(
+                    solved_problems.c.user_id == user_id,
+                    solved_problems.c.problem_id == task.id
+                )
+                .values(solved_at=datetime.now())
+            )
+            flash("Правильный ответ!")
+        else:
+            flash("Ответ отправлен. Неправильный ответ")
+
+    else:
+        db.session.execute(
+            solved_problems.insert().values(
+                user_id=user_id,
+                problem_id=task.id,
+                attempts_count=1,
+                solved_at=datetime.now() if is_correct else None
+            )
+        )
+
+        if is_correct:
+            flash("Правильный ответ!")
+        else:
+            flash("Неправильный ответ")
+
+    db.session.commit()
+    return redirect(url_for('problems.problem', name=name))
