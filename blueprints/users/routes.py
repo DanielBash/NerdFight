@@ -49,6 +49,6 @@ def user(username):
         hole = 0.4,
         textinfo='percent+label',
     )
-    ## конец инизиализации
+    ## конец инизиализаци
     graph_html = fig.to_html(full_html=False, include_plotlyjs='cnd')
     return render_template('user.html', user=users_data, graph_html=graph_html)
