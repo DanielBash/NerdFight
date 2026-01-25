@@ -3,10 +3,23 @@
 {% block title %}Пользователь{% endblock %}
 
 {% block content %}
-<h3 class="accent-color" style="font-size: 75px;">Пользователь:</h3>
-<h3 class="accent-color" style="font-size: 75px;">{{user.username}}</h3>
+<h3 class="accent-color" style="font-size: 50px;">Пользователь:</h3>
+<h3 class="accent-color" style="font-size: 50px;">{{user.username}}</h3>
 <div>ELO: {{user.elo}}</div>
 {% if user.privileges == 1 %}
     <div>Администратор</div>
 {% endif %}
+<hr style="margin-top: 80px; margin-bottom: 40px; border: 1px solid #ccc;">
+<h1>Рейтинг побед</h1>
+<div style="display : flex">
+    <div style="flex: 1">
+        {{graph_html | safe}}
+    </div>
+    <div style="flex: 1">
+        Total games: {{user.total_matches}} <hr>
+        Wins: {{user.won_matches}} <hr>
+        Winrate: {{user.win_rate}}
+    </div>
+</div>
+<div> {{graph_html | safe}} </div>
 {% endblock %}
