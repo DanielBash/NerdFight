@@ -7,7 +7,7 @@
 <div class="task-content">
     {{ task.content | markdown }}
 </div>
-<form method="POST" action="{{ url_for('problems.problem-solve', name=task.name) }}" class="form">
+<form method="POST" action="{{ url_for('problems.problem_solve', name=task.name) }}" class="form">
     <div class="form__group">
         <label for="answer">Введите свой ответ:</label>
         <input type="text" id="answer" name="answer"
