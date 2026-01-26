@@ -78,7 +78,6 @@ def problem(name):
 
 
 @bp.route('/<string:name>/solvers', methods=['GET'])
-@validation.require_privileges(min_privileges=1)
 def problem_solvers(name):
     pagination_size = current_app.config['USERS_PAGINATION_ADMIN']
     task = Problem.query.filter_by(name=name).first_or_404()
