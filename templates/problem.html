@@ -19,7 +19,7 @@
 
     <button type="submit" class="btn btn-primary">Отправить</button>
     <div class="form__message"> <a href="{{ url_for('problems.problems') }}">Вернуться</a> к списку задач?
-        Или хотите просмотреть <a href="{{ url_for('problems.problem-solvers', name=task.name) }}">решивших задачу</a>?
+        Или хотите просмотреть <a href="{{ url_for('problems.problem_solvers', name=task.name) }}">решивших задачу</a>?
     </div>
 </form>
 {% endblock %}
