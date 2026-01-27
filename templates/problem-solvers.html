@@ -16,6 +16,9 @@
         <th><a href="{{ url_for('problems.problem_solvers', page=0, sort='username', name=task.name) }}">
          НИКНЕЙМ
       </a></th>
+      <th><a href="{{ url_for('problems.problem_solvers', page=0, sort='attempts_count', name=task.name) }}">
+         КОЛ-ВО ПОПЫТОК
+      </a></th>
         <th><a href="{{ url_for('problems.problem_solvers', page=0, sort='elo', name=task.name) }}">
          ELO
       </a>
