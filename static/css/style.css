@@ -507,30 +507,179 @@ html::-webkit-scrollbar {
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
     position: relative;
     overflow: hidden;
+    text-align: left; /* Основной текст по левому краю */
 }
 
-.task-content::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899);
-    z-index: 1;
+/* Заголовок задачи - по центру */
+.task-content > h2:first-child {
+    text-align: center;
+    color: #f1f5f9;
+    font-size: 1.8em;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #6366f1;
+    position: relative;
 }
 
-/* Для кода и примеров внутри задачи */
-.task-content code {
-    background: rgba(99, 102, 241, 0.15);
-    color: #93c5fd;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-family: 'Courier New', monospace;
-    font-size: 0.95em;
-    border: 1px solid rgba(99, 102, 241, 0.3);
+/* Основные параграфы - по левому краю с отступом */
+.task-content p {
+    line-height: 1.7;
+    margin: 15px 0;
+    color: #e2e8f0;
+    font-size: 1.05em;
+    text-align: left;
+    max-width: 100%;
 }
 
+/* Особые параграфы - по центру */
+.task-content p.text-center {
+    text-align: center;
+    margin: 20px auto;
+    color: #94a3b8;
+    font-style: italic;
+}
+
+/* Блоки ритуалов - слева с внутренними блоками */
+.ritual-block {
+    background: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    position: relative;
+    transition: all 0.3s ease;
+    text-align: left;
+}
+
+/* Заголовки в блоках ритуалов - слева */
+.ritual-block h3,
+.ritual-block h4 {
+    text-align: left;
+    margin-left: 0;
+    padding-left: 0;
+    border-left: none;
+    color: #d8b4fe;
+}
+
+/* Код в блоках - слева */
+.ritual-block code {
+    display: inline-block;
+    margin: 10px 0;
+    text-align: left;
+}
+
+/* Дисплей состояний - по центру внутри своего контейнера */
+.state-display {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 20px;
+    padding: 5px 15px;
+    margin: 10px 0;
+    font-family: monospace;
+    color: #34d399;
+    text-align: center;
+}
+
+/* Важные блоки - слева с иконкой */
+.important-note {
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    border-radius: 10px;
+    padding: 18px;
+    margin: 20px 0;
+    border-left: 4px solid #f59e0b;
+    text-align: left;
+}
+
+.important-note::before {
+    content: '💡 ';
+    color: #fbbf24;
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+/* Блоки условий - слева с выделением */
+.condition-block {
+    background: rgba(236, 72, 153, 0.1);
+    border: 1px solid rgba(236, 72, 153, 0.3);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    border-left: 4px solid #ec4899;
+    text-align: left;
+}
+
+/* Заголовки внутри контента - слева */
+.task-content h3,
+.task-content h4 {
+    text-align: left;
+    color: #f1f5f9;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    padding-left: 0;
+    border-left: 4px solid #8b5cf6;
+    padding-left: 12px;
+}
+
+/* Кристальная сетка - по центру */
+.crystal-grid {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 25px 0;
+    flex-wrap: wrap;
+}
+
+/* Отдельные кристаллы - содержимое по центру */
+.crystal {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2em;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+/* Подписи под кристаллами - по центру */
+.crystal-label {
+    text-align: center;
+    font-size: 0.9em;
+    color: #94a3b8;
+    margin-top: 5px;
+}
+
+/* Группировка кристаллов с подписями */
+.crystal-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 10px;
+}
+
+/* Выравнивание списков */
+.task-content ul,
+.task-content ol {
+    margin: 15px 0;
+    padding-left: 25px;
+    color: #e2e8f0;
+    text-align: left;
+}
+
+.task-content li {
+    margin: 10px 0;
+    line-height: 1.6;
+    position: relative;
+    text-align: left;
+}
+
+/* Код блоки - слева с автоскроллом */
 .task-content pre {
     background: #0f172a;
     border: 1px solid #334155;
@@ -541,166 +690,82 @@ html::-webkit-scrollbar {
     font-family: 'Courier New', monospace;
     font-size: 0.95em;
     line-height: 1.5;
+    text-align: left;
 }
 
-.task-content pre code {
-    background: transparent;
-    border: none;
-    padding: 0;
-}
-
-.task-content h2,
-.task-content h3,
-.task-content h4 {
-    color: #f1f5f9;
-    margin-top: 25px;
-    margin-bottom: 15px;
-    position: relative;
-    padding-left: 15px;
-}
-
-.task-content h2 {
-    font-size: 1.8em;
-    border-bottom: 2px solid #6366f1;
-    padding-bottom: 10px;
-}
-
-.task-content h3 {
-    font-size: 1.4em;
-    border-left: 4px solid #8b5cf6;
-    padding-left: 12px;
-}
-
-.task-content h4 {
-    font-size: 1.2em;
-    color: #cbd5e1;
-}
-
-.task-content p {
-    line-height: 1.7;
-    margin: 15px 0;
-    color: #e2e8f0;
-    font-size: 1.05em;
-}
-
-.task-content ul,
-.task-content ol {
-    margin: 15px 0;
-    padding-left: 25px;
-    color: #e2e8f0;
-}
-
-.task-content li {
-    margin: 10px 0;
-    line-height: 1.6;
-    position: relative;
-}
-
-.task-content ul li::before {
-    content: '✦';
-    color: #6366f1;
-    position: absolute;
-    left: -20px;
-}
-
-.task-content ol {
-    counter-reset: item;
-}
-
-.task-content ol li {
-    counter-increment: item;
-    padding-left: 25px;
-}
-
-.task-content ol li::before {
-    content: counter(item);
-    background: rgba(99, 102, 241, 0.2);
+/* Встроенный код - инлайн */
+.task-content code {
+    background: rgba(99, 102, 241, 0.15);
     color: #93c5fd;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95em;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    text-align: left;
+    display: inline;
+}
+
+/* Подсветка текста */
+.highlight {
+    background: linear-gradient(120deg, rgba(99, 102, 241, 0.3) 0%, transparent 100%);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #93c5fd;
+    text-align: center;
+}
+
+/* Блоки с решениями/подсказками */
+.solution-block {
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 25px 0;
+    text-align: left;
+    border-left: 4px solid #22c55e;
+}
+
+.solution-block h4 {
+    color: #86efac;
+    border-left: none;
+    padding-left: 0;
+}
+
+/* Математические формулы */
+.math-formula {
+    font-family: 'Cambria Math', serif;
+    font-size: 1.1em;
+    color: #c084fc;
+    padding: 10px;
+    margin: 15px 0;
+    background: rgba(192, 132, 252, 0.1);
+    border-radius: 6px;
     text-align: center;
     display: inline-block;
-    position: absolute;
-    left: -10px;
-    font-size: 0.9em;
-    line-height: 24px;
 }
 
-.form {
-    background: rgba(30, 41, 59, 0.5);
-    border: 1px solid #475569;
-    border-radius: 12px;
-    padding: 30px;
-    margin-top: 30px;
-    backdrop-filter: blur(10px);
+/* Блоки с выравниванием по правому краю */
+.right-aligned {
+    text-align: right;
+    margin-left: auto;
+    max-width: 70%;
+    background: rgba(59, 130, 246, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    border-right: 4px solid #3b82f6;
 }
 
-.form__group {
-    margin-bottom: 25px;
+/* Цитаты и примечания */
+blockquote {
+    border-left: 4px solid #f59e0b;
+    margin: 20px 0;
+    padding-left: 20px;
+    color: #cbd5e1;
+    font-style: italic;
+    text-align: left;
+    background: rgba(245, 158, 11, 0.05);
+    padding: 15px;
+    border-radius: 0 8px 8px 0;
 }
 
-.form__group label {
-    display: block;
-    margin-bottom: 10px;
-    color: #f1f5f9;
-    font-weight: 500;
-    font-size: 1.1em;
-}
-
-.input {
-    width: 100%;
-    padding: 15px 20px;
-    background: #0f172a;
-    border: 2px solid #475569;
-    border-radius: 10px;
-    color: #f1f5f9;
-    font-size: 1.1em;
-    transition: all 0.3s ease;
-}
-
-.input:focus {
-    outline: none;
-    border-color: #6366f1;
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
-}
-
-.btn-primary {
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    color: white;
-    border: none;
-    padding: 15px 35px;
-    border-radius: 10px;
-    font-size: 1.1em;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.btn-primary:hover {
-    background: linear-gradient(135deg, #4f46e5, #7c3aed);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
-}
-
-.form__message {
-    margin-top: 25px;
-    padding-top: 20px;
-    border-top: 1px solid #475569;
-    color: #94a3b8;
-}
-
-.form__message a {
-    color: #93c5fd;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-.form__message a:hover {
-    color: #60a5fa;
-    text-decoration: underline;
-}
