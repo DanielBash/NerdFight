@@ -626,3 +626,67 @@ html::-webkit-scrollbar {
     font-size: 0.9em;
     line-height: 24px;
 }
+
+.state-display {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 20px;
+    padding: 5px 15px;
+    margin: 5px;
+    font-family: monospace;
+    color: #34d399;
+}
+
+.crystal-grid {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 25px 0;
+    flex-wrap: wrap;
+}
+
+.crystal {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2em;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.crystal[data-state="0"] {
+    background: linear-gradient(135deg, #374151, #4b5563);
+    color: #9ca3af;
+}
+
+.crystal[data-state="1"] {
+    background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+    color: white;
+    box-shadow: 0 0 15px rgba(14, 165, 233, 0.5);
+}
+
+.crystal[data-state="2"] {
+    background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+    color: white;
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
+}
+
+.crystal[data-state="3"] {
+    background: linear-gradient(135deg, #ec4899, #f472b6);
+    color: white;
+    box-shadow: 0 0 25px rgba(236, 72, 153, 0.7);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 20px rgba(236, 72, 153, 0.7); }
+    50% { box-shadow: 0 0 30px rgba(236, 72, 153, 0.9); }
+    100% { box-shadow: 0 0 20px rgba(236, 72, 153, 0.7); }
+}
