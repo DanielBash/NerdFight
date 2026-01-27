@@ -498,11 +498,131 @@ html::-webkit-scrollbar {
 /* =========================
    LINKS INSIDE MARKDOWN
    ========================= */
-.task-content a {
-  color: #9a9a9a; /* нейтральные ссылки */
-  text-decoration: underline;
+.task-content {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border: 1px solid #2d3748;
+    border-radius: 12px;
+    padding: 30px;
+    margin: 25px 0;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    position: relative;
+    overflow: hidden;
 }
 
-.task-content a:hover {
-  color: #ffffff;
+.task-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899);
+    z-index: 1;
+}
+
+/* Для кода и примеров внутри задачи */
+.task-content code {
+    background: rgba(99, 102, 241, 0.15);
+    color: #93c5fd;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95em;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.task-content pre {
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 20px;
+    overflow-x: auto;
+    margin: 20px 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95em;
+    line-height: 1.5;
+}
+
+.task-content pre code {
+    background: transparent;
+    border: none;
+    padding: 0;
+}
+
+.task-content h2,
+.task-content h3,
+.task-content h4 {
+    color: #f1f5f9;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    position: relative;
+    padding-left: 15px;
+}
+
+.task-content h2 {
+    font-size: 1.8em;
+    border-bottom: 2px solid #6366f1;
+    padding-bottom: 10px;
+}
+
+.task-content h3 {
+    font-size: 1.4em;
+    border-left: 4px solid #8b5cf6;
+    padding-left: 12px;
+}
+
+.task-content h4 {
+    font-size: 1.2em;
+    color: #cbd5e1;
+}
+
+.task-content p {
+    line-height: 1.7;
+    margin: 15px 0;
+    color: #e2e8f0;
+    font-size: 1.05em;
+}
+
+.task-content ul,
+.task-content ol {
+    margin: 15px 0;
+    padding-left: 25px;
+    color: #e2e8f0;
+}
+
+.task-content li {
+    margin: 10px 0;
+    line-height: 1.6;
+    position: relative;
+}
+
+.task-content ul li::before {
+    content: '✦';
+    color: #6366f1;
+    position: absolute;
+    left: -20px;
+}
+
+.task-content ol {
+    counter-reset: item;
+}
+
+.task-content ol li {
+    counter-increment: item;
+    padding-left: 25px;
+}
+
+.task-content ol li::before {
+    content: counter(item);
+    background: rgba(99, 102, 241, 0.2);
+    color: #93c5fd;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    display: inline-block;
+    position: absolute;
+    left: -10px;
+    font-size: 0.9em;
+    line-height: 24px;
 }
