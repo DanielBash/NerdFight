@@ -30,7 +30,7 @@
       <tr>
         <td>{{user.id}}</td>
         <td><a class="row-link" href="{{ url_for('users.user', username=user.username) }}">{{user.username}}</a></td>
-        <td>{{record.attempts_count}}</td>
+        <td>{{solved_problems.attempts_count}}</td>
         <td>{{user.elo}}</td>
         <td>{{user.privileges}}</td>
       </tr>
