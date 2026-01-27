@@ -100,6 +100,8 @@ def problem_solvers(name):
         user_query = user_query.order_by(User.username)
     elif sort == 'elo':
         user_query = user_query.order_by(User.elo.desc())
+    elif sort == 'attempts_count':
+        user_query = user_query.order_by(solved_problems.c.attempts_count)
 
     total = user_query.count()
 
