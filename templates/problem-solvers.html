@@ -26,11 +26,11 @@
       </tr>
     </thead>
     <tbody>
-    {% for user in users %}
+    {% for user, attempts in users %}
       <tr>
         <td>{{user.id}}</td>
         <td><a class="row-link" href="{{ url_for('users.user', username=user.username) }}">{{user.username}}</a></td>
-        <td>{{attempts_count}}</td>
+        <td>{{attempts}}</td>
         <td>{{user.elo}}</td>
         <td>{{user.privileges}}</td>
       </tr>

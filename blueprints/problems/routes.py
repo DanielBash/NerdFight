@@ -1,11 +1,12 @@
 """СКРИПТ:Пути для отображения задач пользователям"""
-from datetime import datetime
+
 
 # -- импорт модулей
 from flask import Blueprint, render_template, redirect, url_for, current_app, flash
 from flask import request, g
 from sqlalchemy import select, update
 from models import Problem, validation, User, db, solved_problems
+from datetime import datetime
 
 bp = Blueprint('problems', __name__, template_folder='templates')
 
@@ -86,7 +87,7 @@ def problem_solvers(name):
     sort = request.args.get('sort', 'id')
 
     user_query = (
-        User.query
+        db.session.query(User, solved_problems.c.attempts_count)
         .join(solved_problems, solved_problems.c.user_id == User.id)
         .filter(
             solved_problems.c.problem_id == task.id,
@@ -99,7 +100,10 @@ def problem_solvers(name):
     elif sort == 'username':
         user_query = user_query.order_by(User.username)
     elif sort == 'attempts_count':
-        user_query = user_query.order_by(solved_problems.c.attempts_count)
+        user_query = user_query.order_by(
+            solved_problems.c.attempts_count.asc(),
+            User.id.asc()
+        )
     elif sort == 'elo':
         user_query = user_query.order_by(User.elo.desc())
 
@@ -144,10 +148,6 @@ def problem_solvers(name):
         has_prev=has_prev,
         task=task
     )
-
-
-from flask import request, redirect, url_for, flash, g
-from datetime import datetime
 
 
 @bp.route('/<string:name>/solve', methods=['POST'])
