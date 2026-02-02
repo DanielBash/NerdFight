@@ -13,7 +13,7 @@
     {% for u in users_data %}
     <tr>
         <td>{{loop.index}}</td>
-        <td>{{u.username}}</td>
+        <td><a href="/users/{{u.username}}">{{u.username}}</a></td>
         <td>{{u.elo}}</td>
     </tr>
     {% endfor %}
