@@ -5,8 +5,9 @@ from markupsafe import Markup
 import markdown
 from config import *
 from models import db, User
+import models
 from blueprints.registration.validation import hash_password
-from flask import g, session
+from flask_socketio import SocketIO
 
 
 # - инициализация приложения
@@ -17,6 +18,8 @@ def create_app(config_name='default') -> Flask:
     app.config.from_object(config_class)
 
     db.init_app(app)
+    socketio = SocketIO(app)
+    models.socketio = socketio
 
     with app.app_context():
         from blueprints.main.routes import bp as main_bp

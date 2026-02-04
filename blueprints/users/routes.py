@@ -69,33 +69,60 @@ def users():
 
 @bp.route('/<string:username>', methods=['GET'])
 def user(username):
-    users_data = User.query.filter_by(username=username).first()
+    users_data = User.query.filter_by(username=username).first_or_404()
 
-    if users_data.total_matches != 0:
-        data = {'Object': ['Победы', 'Поражения'],
-                'Count': [users_data.won_matches, users_data.total_matches - users_data.won_matches]}
+    if users_data.total_matches > 0:
+        wins = users_data.won_matches
+        losses = users_data.total_matches - wins
+
+        labels = ['Победы', 'Поражения']
+        values = [wins, losses]
+        textinfo = 'percent+label'
+        hovertemplate = '%{label}: %{value} (%{percent})<extra></extra>'
+        colors = ['#22b14c', '#0b5d1e']
+
     else:
-        data = {'Object': ['Не сыграно ни одной игры'], 'Count': [1]}
-    fig = px.pie(data, values='Count', names='Object')
+        labels = ['Игры отсутствуют']
+        values = [1]
+        textinfo = 'label'
+        hovertemplate = 'Пользователь ещё не играл<extra></extra>'
+        colors = ['#22b14c']
 
-    fig.update_layout(
-        paper_bgcolor='rgba(0, 0, 0, 0)',
-        plot_bgcolor='rgba(0, 0, 0, 0)',
-
-        font=dict(
-            family='Courier New, monospace',
-            size=18,
-            color='#22b14c',
-        ),
-        margin=dict(t=20, b=0, l=0, r=0),
-        showlegend=False,
+    fig = px.pie(
+        names=labels,
+        values=values,
+        hole=0.4
     )
 
     fig.update_traces(
-        marker=dict(colors=['#22b14c', '#00ff00']),
-        hole=0.4,
-        textinfo='percent+label',
+        textinfo=textinfo,
+        hovertemplate=hovertemplate,
+        marker=dict(colors=colors)
     )
 
-    graph_html = fig.to_html(full_html=True)
-    return render_template('user.html', user=users_data, graph_html=graph_html, req_user=g.user)
+    fig.update_layout(
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)',
+        font=dict(
+            family='Courier New, monospace',
+            size=18,
+            color='#22b14c'
+        ),
+        margin=dict(t=20, b=0, l=0, r=0),
+        showlegend=False
+    )
+
+    graph_html = fig.to_html(
+        full_html=False,
+        config={
+            'displayModeBar': False,
+            'displaylogo': False
+        }
+    )
+
+    return render_template(
+        'user.html',
+        user=users_data,
+        graph_html=graph_html,
+        req_user=g.user
+    )

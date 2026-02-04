@@ -3,5 +3,78 @@
 {% block title %}Сражение{% endblock %}
 
 {% block content %}
-<h1 class="container header__inner">СРАЖЕНИЕ</h1>
+<h1 class="hero__title accent-color">СРАЖЕНИЕ</h1>
+<p class="hero__subtitle">
+    Сразись с соперником в битве, реши задачу быстрее него!
+</p>
+
+<div class="actions" style="margin-bottom: 30px;", id="searchbar">
+    <div class="actions__item">
+        <button class="btn btn--secondary" onclick="queue()">Найти соперника</button>
+    </div>
+</div>
+
+<div id="status" class="hero__subtitle" style="margin-bottom: 20px;"></div>
+
+<div id="problem" style="display:none; max-width: 600px; margin: 0 auto;">
+    <h3 class="accent-color">Задачка:</h3>
+    <p id="problemText" style="margin-bottom: 15px;"></p>
+
+    <div style="display:flex; gap:10px; justify-content:center;">
+        <input type="text" id="answerInput" class="input" placeholder="Твой ответ...">
+        <button class="btn btn--secondary" onclick="sendAnswer()">Ответить</button>
+    </div>
+</div>
+
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script>
+    const socket = io();
+    let currentRoom = null;
+
+    socket.on("connect", () => {
+        console.log("Connected to server");
+    });
+
+    function queue() {
+        socket.emit("queue_for_fight");
+        document.getElementById("status").innerText = "Подключение...";
+        document.getElementById("searchbar").style.display = "none";
+    }
+
+    socket.on("queue_status", data => {
+        document.getElementById("status").innerText = "Ожидание соперника...";
+        document.getElementById("searchbar").style.display = "none";
+    });
+
+    socket.on("match_found", data => {
+        currentRoom = data.room;
+        document.getElementById("status").innerText = "Соперник найден! Бой начинается";
+        document.getElementById("problemText").innerText = data.problem;
+        document.getElementById("problem").style.display = "block";
+        console.log('FOUND!!');
+    });
+
+    function sendAnswer() {
+        const ans = document.getElementById("answerInput").value;
+        socket.emit("submit_answer", {
+            room: currentRoom,
+            answer: ans
+        });
+    }
+
+    socket.on("wrong_answer", () => {
+        alert("Неверно, попробуй ещё!");
+    });
+
+    socket.on("match_result", data => {
+        if (data.winner_id === {{ user.id if user else 'null' }}) {
+            alert("Победа!");
+        } else {
+            alert("Поражение!");
+        }
+        location.reload();
+    });
+
+    socket.emit('connect')
+</script>
 {% endblock %}

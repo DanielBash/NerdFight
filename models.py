@@ -7,6 +7,7 @@ from sqlalchemy import CheckConstraint
 from blueprints.registration import validation
 
 db = SQLAlchemy()
+socketio = None
 
 # - связь пользователя с задачей
 solved_problems = db.Table('solved_problems',
