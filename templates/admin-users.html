@@ -3,7 +3,7 @@
 {% block title %}Пользователи{% endblock %}
 
 {% block content %}
-<h1 class="hero__title accent-color"><a href="{{ url_for('admin.index') }}">Админка</a>: Пользователи</h1>
+<h1 class="hero__title accent-color"><a href="{{ url_for('admin.index') }}">АДМИНКА</a>: ПОЛЬЗОВАТЕЛИ</h1>
     <p class="hero__subtitle">Список всех пользователей сайта. Назад в <a href="{{ url_for('admin.index') }}">админ-панель</a>, или
     <a href="{{ url_for('admin.users_create') }}">создать пользователя</a>?</p>
 {% if users %}
@@ -12,13 +12,13 @@
     <thead>
       <tr>
         <th><a href="{{ url_for('admin.users', page=0, sort='id') }}">
-         ID
+         АЙ-ДИ
       </a></th>
         <th><a href="{{ url_for('admin.users', page=0, sort='username') }}">
          НИКНЕЙМ
       </a></th>
         <th><a href="{{ url_for('admin.users', page=0, sort='elo') }}">
-         ELO
+         ЕЛО
       </a>
          <th>ПРАВА</th>
       </tr>

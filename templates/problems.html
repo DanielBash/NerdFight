@@ -3,18 +3,15 @@
 {% block title %}Задачи{% endblock %}
 
 {% block content %}
-<h1 class="container header__inner">Nerd Fight - список задач</h1>
-<div class="container">
-    <h1><a href="/">Назад</a></h1>
-</div>
+<h1 class="hero__title accent-color">ЗАДАЧИ</h1>
+<p class="hero__subtitle">
+    Вернуться на <a href="{{ url_for('main.index') }}">главную</a>?
+</p>
 {% if problems %}
 <div class="table-wrapper">
     <table class="table table--center">
         <thead>
           <tr>
-              <th><a href="{{ url_for('problems.problems', page=0, sort='id') }}">
-             ID
-          </a></th>
             <th><a href="{{ url_for('problems.problems', page=0, sort='name') }}">
              НАЗВАНИЕ
           </a></th>
@@ -23,7 +20,6 @@
     <tbody>
     {% for problem in problems %}
       <tr>
-        <td>{{problem.id}}</td>
         <td><a class="row-link" href="{{ url_for('problems.problem', name=problem.name) }}">{{problem.name}}</a></td>
       </tr>
     {% endfor %}

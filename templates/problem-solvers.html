@@ -3,16 +3,13 @@
 {% block title %}Пользователи{% endblock %}
 
 {% block content %}
-<h1 class="hero__title accent-color">Решившие задачу</h1>
+<h1 class="hero__title accent-color">РЕШИВШИЕ</h1>
     <p class="hero__subtitle">Список решивших задачу. Назад к <a href="{{ url_for('problems.problem', name=task.name) }}">задаче</a>?
 {% if users %}
 <div class="table-wrapper">
   <table class="table table--center">
     <thead>
       <tr>
-        <th><a href="{{ url_for('problems.problem_solvers', page=0, sort='id', name=task.name) }}">
-         ID
-      </a></th>
         <th><a href="{{ url_for('problems.problem_solvers', page=0, sort='username', name=task.name) }}">
          НИКНЕЙМ
       </a></th>
@@ -20,7 +17,7 @@
          КОЛ-ВО ПОПЫТОК
       </a></th>
         <th><a href="{{ url_for('problems.problem_solvers', page=0, sort='elo', name=task.name) }}">
-         ELO
+         ЕЛО
       </a>
          <th>ПРАВА</th>
       </tr>
@@ -28,7 +25,6 @@
     <tbody>
     {% for user, attempts in users %}
       <tr>
-        <td>{{user.id}}</td>
         <td><a class="row-link" href="{{ url_for('users.user', username=user.username) }}">{{user.username}}</a></td>
         <td>{{attempts}}</td>
         <td>{{user.elo}}</td>

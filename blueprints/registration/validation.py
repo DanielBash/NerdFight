@@ -29,6 +29,7 @@ def validate_password(password):
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
+
 def require_privileges(min_privileges=0):
     def decorator(f):
         @wraps(f)
@@ -40,5 +41,7 @@ def require_privileges(min_privileges=0):
                 flash('Недостаточно прав доступа', 'danger')
                 return redirect(url_for('main.index'))
             return f(*args, **kwargs)
+
         return decorated_function
+
     return decorator
