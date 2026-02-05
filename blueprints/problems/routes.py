@@ -4,7 +4,7 @@
 # -- импорт модулей
 from flask import Blueprint, render_template, redirect, url_for, current_app, flash
 from flask import request, g
-from sqlalchemy import select, update
+from sqlalchemy import select, update, func, distinct
 from models import Problem, validation, User, db, solved_problems
 from datetime import datetime
 
@@ -20,9 +20,33 @@ def problems():
     # Устанавливаем количество элементов на одной странице
     per_page = current_app.config['PROBLEMS_PAGINATION_ADMIN']
 
+    solvers_subquery = (
+        db.select(
+            solved_problems.c.problem_id,
+            db.func.count(distinct(solved_problems.c.user_id)).label('solvers_count')
+        )
+        .where(solved_problems.c.solved_at.isnot(None))
+        .group_by(solved_problems.c.problem_id)
+        .subquery()
+    )
+
+    # Основной запрос с LEFT JOIN к подзапросу
+    query = (
+        db.session.query(
+            Problem,
+            db.func.coalesce(solvers_subquery.c.solvers_count, 0).label('solvers_count')
+        )
+        .outerjoin(solvers_subquery, Problem.id == solvers_subquery.c.problem_id)
+    )
+
+
     problem_query = Problem.query
+
     if sort == 'name':
         problem_query = Problem.query.order_by(Problem.name)
+    elif sort == 'solvers_count':
+        query = query.order_by(db.desc('solvers_count'))  # по убыванию
+
     # Общее количество элементов
     total_items = problem_query.count()
 

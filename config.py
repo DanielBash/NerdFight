@@ -51,7 +51,7 @@ class Config:
     ALLOWED_EXTENSIONS = ['csv', 'json']
 
     # настройки админ панели
-    PROBLEMS_PAGINATION_ADMIN = 20
+    PROBLEMS_PAGINATION_ADMIN = 10
     USERS_PAGINATION_ADMIN = 20
 
 
