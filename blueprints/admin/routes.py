@@ -252,13 +252,13 @@ def problems_export():
                 db.session.add(Problem(
                     name=item['name'].strip(),
                     content=item['content'].strip(),
-                    answer=item['answer'].strip()
+                    answer=str(item['answer']).strip()
                 ))
 
         db.session.commit()
         flash('Задачи успешно загружены')
 
-    except Exception:
+    except Exception as e:
         db.session.rollback()
         flash('Произошла ошибка при загрузке файла')
 
