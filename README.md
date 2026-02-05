@@ -1,4 +1,4 @@
-![Banner](https://imghost.online/ib/hyDtheYbaBY3FeZ_1768406908.png)
+![Banner](https://github.com/user-attachments/assets/9a1ad0c8-f90c-4bdf-8ee0-32265c110e75)
 [![Tests](https://github.com/DanielBash/NerdFight/actions/workflows/python-tests.yaml/badge.svg)](https://github.com/DanielBash/NerdFight/actions/workflows/python-tests.yaml)
 ![Python](https://img.shields.io/badge/python-3.8%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
