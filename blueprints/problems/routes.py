@@ -11,26 +11,25 @@ from datetime import datetime
 bp = Blueprint('problems', __name__, template_folder='templates')
 
 
-@bp.route('/', methods=['GET', ])
+@bp.route('/', methods=['GET'])
 def problems():
-    # Получаем текущую страницу из параметров запроса, по умолчанию страница 1
     page = request.args.get('page', 0, type=int)
     sort = request.args.get('sort', 'id')
 
-    # Устанавливаем количество элементов на одной странице
     per_page = current_app.config['PROBLEMS_PAGINATION_ADMIN']
 
+    # --- subquery with solver count ---
     solvers_subquery = (
-        db.select(
+        db.session.query(
             solved_problems.c.problem_id,
-            db.func.count(distinct(solved_problems.c.user_id)).label('solvers_count')
+            db.func.count(db.distinct(solved_problems.c.user_id)).label('solvers_count')
         )
-        .where(solved_problems.c.solved_at.isnot(None))
+        .filter(solved_problems.c.solved_at.isnot(None))
         .group_by(solved_problems.c.problem_id)
         .subquery()
     )
 
-    # Основной запрос с LEFT JOIN к подзапросу
+    # --- base query ---
     query = (
         db.session.query(
             Problem,
@@ -39,21 +38,15 @@ def problems():
         .outerjoin(solvers_subquery, Problem.id == solvers_subquery.c.problem_id)
     )
 
-
-    problem_query = Problem.query
-
     if sort == 'name':
-        problem_query = Problem.query.order_by(Problem.name)
+        query = query.order_by(Problem.name)
     elif sort == 'solvers_count':
-        query = query.order_by(db.desc('solvers_count'))  # по убыванию
+        query = query.order_by(db.desc('solvers_count'))
+    else:
+        query = query.order_by(Problem.id)
 
-    # Общее количество элементов
-    total_items = problem_query.count()
+    total_items = query.count()
 
-    last_page = (total_items - 1) // per_page
-
-    has_next = page < last_page
-    has_prev = page > 0
     if total_items == 0:
         return render_template(
             'problems.html',
@@ -66,33 +59,25 @@ def problems():
 
     last_page = (total_items - 1) // per_page
 
+    if page < 0:
+        page = 0
     if page > last_page:
         return redirect(url_for('problems.problems', page=last_page, sort=sort))
 
-    if page < 0:
-        page = 0
-
-    problem_list = (
-        problem_query
+    problems = (
+        query
         .limit(per_page)
         .offset(page * per_page)
         .all()
     )
 
-    # Общее количество страниц (округляем вверх)
-    total_pages = (total_items + per_page - 1) // per_page
-
-    # Определяем начальный и конечный индекс для текущей страницы
-    has_next = page < last_page
-    has_prev = page > 0
-
     return render_template(
         'problems.html',
-        problems=problem_list,
+        problems=problems,
         current_page=page,
         current_sort=sort,
-        has_next=has_next,
-        has_prev=has_prev
+        has_next=page < last_page,
+        has_prev=page > 0
     )
 
 

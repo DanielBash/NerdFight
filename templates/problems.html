@@ -13,10 +13,8 @@
         <thead>
           <tr>
             <th><a href="{{ url_for('problems.problems', page=0 , sort='solvers_count') }}">
-             КОЛ-ВО РЕШИВШИХ
+             РЕШЕНИЯ
           </a></th>
-          </tr>
-          <tr>
             <th><a href="{{ url_for('problems.problems', page=0, sort='name') }}">
              НАЗВАНИЕ
           </a></th>
@@ -34,8 +32,6 @@
             <span class="no-solvers">0</span>
         {% endif %}
         </td>
-      </tr>
-      <tr>
         <td><a class="row-link" href="{{ url_for('problems.problem', name=problem.name) }}">{{problem.name}}</a></td>
       </tr>
     {% endfor %}
