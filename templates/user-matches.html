@@ -7,7 +7,7 @@
 {% if req_user.username == user.username %}
 <p class="hero__subtitle">Список всех ваших матчей, <a href="{{ url_for('users.user', username=req_user.username) }}">{{user.username}}</a>.</p>
 {% else %}
-<p class="hero__subtitle">Список всех матчей - <a href="{{ url_for('users.user', username=req_user.username) }}">{{user.username}}</a>.</p>
+<p class="hero__subtitle">Список всех матчей - <a href="{{ url_for('users.user', username=req_user.username) }}">{{req_user.username}}</a>.</p>
 {% endif %}
 {% if req_user.all_matches %}
 <div class="table-wrapper">
