@@ -61,6 +61,12 @@ class User(db.Model):
         return won_as_first + won_as_second
 
     @property
+    def won_matches_list(self):
+        won_as_first = self.matches_as_first.filter(Match.result == 1).all()
+        won_as_second = self.matches_as_second.filter(Match.result == 2).all()
+        return won_as_first + won_as_second
+
+    @property
     def total_matches(self):
         return self.matches_as_first.count() + self.matches_as_second.count()
 
@@ -145,3 +151,7 @@ class Match(db.Model):
         CheckConstraint('result IN (0, 1, 2)', name='check_match_result'),
         CheckConstraint('first_player_id != second_player_id', name='check_different_players'),
     )
+
+    @property
+    def problem(self):
+        return Problem.query.filter_by(id=self.problem_id).first()

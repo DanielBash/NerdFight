@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Пользователи{% endblock %}
+
+{% block content %}
+<h1 class="hero__title accent-color">МАТЧИ</h1>
+{% if req_user.username == user.username %}
+<p class="hero__subtitle">Список всех ваших матчей, <a href="{{ url_for('users.user', username=req_user.username) }}">{{user.username}}</a>.</p>
+{% else %}
+<p class="hero__subtitle">Список всех матчей - <a href="{{ url_for('users.user', username=req_user.username) }}">{{user.username}}</a>.</p>
+{% endif %}
+{% if req_user.all_matches %}
+<div class="table-wrapper">
+  <table class="table table--center">
+    <thead>
+      <tr>
+        <th>НАЧАЛО</th>
+        <th>КОНЕЦ</th>
+        <th>РЕЗУЛЬТАТ</th>
+        <th>НАЗВАНИЕ</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for match in req_user.all_matches %}
+      <tr>
+        <td>{{match.created_at}}</td>
+        <td>{{match.ended_at}}</td>
+        {% if match in req_user.won_matches_list %}
+        <td>ПОБЕДА</td>
+        {% else %}
+        <td>ПОРАЖЕНИЕ</td>
+        {% endif %}
+        <th><a href="{{ url_for('problems.problem', name=match.problem.name) }}">{{match.problem.name}}</a></th>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p class="hero__subtitle">Ни одного матча еще не сыграно. Почему бы не бросить вызов кому-нибудь?</p>
+{% endif %}
+{% endblock %}

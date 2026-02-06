@@ -18,7 +18,6 @@ def problems():
 
     per_page = current_app.config['PROBLEMS_PAGINATION_ADMIN']
 
-    # --- subquery with solver count ---
     solvers_subquery = (
         db.session.query(
             solved_problems.c.problem_id,
@@ -29,7 +28,6 @@ def problems():
         .subquery()
     )
 
-    # --- base query ---
     query = (
         db.session.query(
             Problem,
