@@ -179,14 +179,7 @@ def problem_solve(name):
     is_correct = user_answer == correct_answer
 
     if record:
-        db.session.execute(
-            db.update(solved_problems)
-            .where(
-                solved_problems.c.user_id == user_id,
-                solved_problems.c.problem_id == task.id
-            )
-            .values(attempts_count=record["attempts_count"] + 1)
-        )
+
 
         if is_correct and record["solved_at"] is None:
             db.session.execute(
@@ -195,11 +188,11 @@ def problem_solve(name):
                     solved_problems.c.user_id == user_id,
                     solved_problems.c.problem_id == task.id
                 )
-                .values(solved_at=datetime.now())
+                .values(solved_at=datetime.now(), attempts_count=record["attempts_count"] + 1)
             )
             flash("Правильный ответ!")
         else:
-            flash("Ответ отправлен. Неправильный ответ")
+            flash("Ты уже решал это задание, попытка не засчитана")
 
     else:
         db.session.execute(
