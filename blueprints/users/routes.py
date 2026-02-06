@@ -122,7 +122,16 @@ def user(username):
 
     return render_template(
         'user.html',
-        user=users_data,
         graph_html=graph_html,
-        req_user=g.user
+        req_user=users_data
+    )
+
+
+@bp.route('/<string:username>/matches', methods=['GET'])
+def user_matches(username):
+    req_user = User.query.filter_by(username=username).first_or_404()
+
+    return render_template(
+        'user-matches.html',
+        req_user=req_user
     )

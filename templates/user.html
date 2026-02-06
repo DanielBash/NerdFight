@@ -3,19 +3,25 @@
 {% block title %}Пользователь{% endblock %}
 
 {% block content %}
-    <h1 class="hero__title accent-color">NERD FIGHT</h1>
+    <h1 class="hero__title accent-color">ПОЛЬЗОВАТЕЛЬ</h1>
     <p class="hero__subtitle">
-        Статистика игрока <span class="accent-color">{{user.username}}</span>.
+        Статистика игрока <span class="accent-color">{{req_user.username}}</span>.
+        {% if user.username == req_user.username %}
+Это вы!
+{% endif %}
     </p>
     <div style="flex: 1">
-        Всего игр: {{user.total_matches}} <br/>
-        Побед: {{user.won_matches}} <br/>
-        Поражений:{{user.total_matches - user.won_matches}} <br/>
-        Процент побед: {{user.win_rate}} <br/>
-        Ело: {{user.elo}}
-        {% if user.privileges == 1 %}
+        Всего игр: {{req_user.total_matches}} <br/>
+        Побед: {{req_user.won_matches}} <br/>
+        Поражений:{{req_user.total_matches - req_user.won_matches}} <br/>
+        Процент побед: {{req_user.win_rate}} <br/>
+        Ело: {{req_user.elo}}
+        {% if req_user.privileges == 1 %}
             <br/>Администратор
         {% endif %}
     </div>
 <div> {{graph_html | safe}} </div>
+<div style="flex: 1">
+    <a href="{{ url_for('users.user_matches', username=req_user.username) }}">Сыгранные матчи</a>
+</div>
 {% endblock %}
