@@ -179,7 +179,14 @@ def problem_solve(name):
     is_correct = user_answer == correct_answer
 
     if record:
-
+        db.session.execute(
+            db.update(solved_problems)
+            .where(
+                solved_problems.c.user_id == user_id,
+                solved_problems.c.problem_id == task.id
+            )
+            .values(attempts_count=record["attempts_count"] + 1)
+        )
 
         if is_correct and record["solved_at"] is None:
             db.session.execute(
@@ -188,11 +195,35 @@ def problem_solve(name):
                     solved_problems.c.user_id == user_id,
                     solved_problems.c.problem_id == task.id
                 )
-                .values(solved_at=datetime.now(), attempts_count=record["attempts_count"] + 1)
+                .values(solved_at=datetime.now(),attempts_count=record["attempts_count"] + 1)
             )
             flash("Правильный ответ!")
+        elif is_correct:
+            # Правильно, но уже решал ранее
+            db.session.execute(
+                db.update(solved_problems)
+                .where(
+                    solved_problems.c.user_id == user_id,
+                    solved_problems.c.problem_id == task.id
+                )
+                .values(
+                    attempts_count=record["attempts_count"]
+                )
+            )
+            flash("Задача уже была решена ранее, попытка не засчитана")
         else:
-            flash("Ты уже решал это задание, попытка не засчитана")
+            # Неправильный ответ
+            db.session.execute(
+                db.update(solved_problems)
+                .where(
+                    solved_problems.c.user_id == user_id,
+                    solved_problems.c.problem_id == task.id
+                )
+                .values(
+                    attempts_count=record["attempts_count"] + 1  # увеличиваем счетчик
+                )
+            )
+            flash("Неправильный ответ, +1 попытка")
 
     else:
         db.session.execute(
