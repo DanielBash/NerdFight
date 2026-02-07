@@ -31,7 +31,7 @@
         {% else %}
         <td>ПОРАЖЕНИЕ</td>
         {% endif %}
-        <th<a class="row-link" href="{{ url_for('problems.problem', name=match.problem.name) }}">{{match.problem.name}}</a></th>
+        <th><a class="row-link" href="{{ url_for('problems.problem', name=match.problem.name) }}">{{match.problem.name}}</a></th>
         {% if match.first_player.username == req_user.username %}
         <td><a class="row-link" href="{{ url_for('users.user', username=match.second_player.username) }}">{{match.second_player.username}}</a></td>
         {% else %}
