@@ -155,3 +155,11 @@ class Match(db.Model):
     @property
     def problem(self):
         return Problem.query.filter_by(id=self.problem_id).first()
+
+    @property
+    def first_player(self):
+        return User.query.filter_by(id=self.first_player_id).first()
+
+    @property
+    def second_player(self):
+        return User.query.filter_by(id=self.second_player_id).first()
