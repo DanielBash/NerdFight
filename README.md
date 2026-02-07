@@ -31,10 +31,10 @@ python main.py
 ### ВАРИАНТ 2: Docker-контейнер
 1) Скачать контейнер с docker hub:
 ```bash
-docker pull danielbashl/nerdfight:1.0
+docker pull danielbashl/nerdfight:latest
 ```
 
 2) Запустить контейнер:
 ```bash
-docker run -d -p 8000:5000 danielbashl/nerdfight:1.0
+docker run -d -p 8000:5000 danielbashl/nerdfight:latest
 ```
