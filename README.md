@@ -8,7 +8,7 @@
 > Веб-сайт для мазохистов, которым не хватает школьных задач.
 
 Nerd Fight - интернет ресурс для быстрой и интуитивной подготовки к олимпиадным соревнованиям.
-Развернут на [этом](https://raw.githubusercontent.com/DanielBash/NerdFight/refs/heads/master/static/images/logo.png) веб-сайте.
+Развернут на [этом](https://raw.githubusercontent.com/DanielBash/NerdFight/refs/heads/master/static/images/logo.png) веб-сайте. Видео-демонстрацию можно увидеть [тут](https://disk.yandex.ru/d/IVx2muEMQoX_OQ).
 
 ## Локальный запуск
 ### ВАРИАНТ 1: Виртуальное окружение
