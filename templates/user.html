@@ -5,7 +5,8 @@
 {% block content %}
     <h1 class="hero__title accent-color">ПОЛЬЗОВАТЕЛЬ</h1>
     <p class="hero__subtitle">
-        Статистика игрока <span class="accent-color">{{req_user.username}}</span>.
+        Статистика игрока <span class="accent-color">{{req_user.username}}</span>. Вернуться к
+        <a href="{{ url_for('users.users') }}">списку пользователей</a>?
         {% if user.username == req_user.username %}
 Это вы!
 {% endif %}
@@ -15,7 +16,8 @@
         Побед: {{req_user.won_matches}} <br/>
         Поражений:{{req_user.total_matches - req_user.won_matches}} <br/>
         Процент побед: {{req_user.win_rate}} <br/>
-        Ело: {{req_user.elo}}
+        Ело: {{req_user.elo}} <br/>
+        Среднее время решения: {{req_user.average_solve_time}} сек.
         {% if req_user.privileges == 1 %}
             <br/>Администратор
         {% endif %}

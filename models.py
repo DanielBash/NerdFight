@@ -75,7 +75,7 @@ class User(db.Model):
         total = self.total_matches
         if total == 0:
             return 0
-        return (self.won_matches / total) * 100
+        return round((self.won_matches / total) * 100, 2)
 
     @property
     def all_matches(self):
@@ -84,6 +84,21 @@ class User(db.Model):
         all_matches = list(matches_as_first) + list(matches_as_second)
         all_matches.sort(key=lambda m: m.created_at if hasattr(m, 'created_at') else m.id, reverse=True)
         return all_matches
+
+    @property
+    def average_solve_time(self):
+        matches_as_first = self.matches_as_first.all()
+        matches_as_second = self.matches_as_second.all()
+        all_matches = list(matches_as_first) + list(matches_as_second)
+        total_time_played = 0
+        for i in all_matches:
+            duration = i.ended_at - i.created_at
+            total_time_played += duration.seconds
+        if len(all_matches) > 0:
+            return round(total_time_played / len(all_matches), 2)
+        else:
+            return 0
+
 
     def update_elo(self, match, K):
         if match.second_player_id == self.id:
