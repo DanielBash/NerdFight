@@ -7,10 +7,11 @@
 
 > Веб-сайт для мазохистов, которым не хватает школьных задач.
 
-Nerd Fight - интернет ресурс для быстрой и интуитивной подготовки к олимпиадным соревнованиям. Создан маленькой командой разработчиков для предпрофессиональной олимпиады школьников.
+Nerd Fight - интернет ресурс для быстрой и интуитивной подготовки к олимпиадным соревнованиям.
 Развернут на [этом](https://raw.githubusercontent.com/DanielBash/NerdFight/refs/heads/master/static/images/logo.png) веб-сайте.
 
 ## Локальный запуск
+### ВАРИАНТ 1: Виртуальное окружение
 1) Скачать репозиторий проекта
 ```bash
 git clone https://github.com/DanielBash/NerdFight.git
@@ -25,4 +26,15 @@ pip install -r requirements.txt
 3) Запустить скрипт
 ```bash
 python main.py
+```
+
+### ВАРИАНТ 2: Docker-контейнер
+1) Скачать контейнер с docker hub:
+```bash
+docker pull danielbashl/nerdfight:1.0
+```
+
+2) Запустить контейнер:
+```bash
+docker run -d -p 8000:5000 danielbashl/nerdfight:1.0
 ```
