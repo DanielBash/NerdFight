@@ -63,6 +63,8 @@ class DevelopmentConfig(Config):
 # -- конфигурация для продакшена
 class ProductionConfig(Config):
     DEBUG = False
+    DB_PASSWORD = os.environ.get('DB_PASSWORD', 'db-pass')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', f'postgresql://postgres:{DB_PASSWORD}@localhost:5432/postgres')
 
 
 CONFIGS = {
